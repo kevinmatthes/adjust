@@ -28,9 +28,23 @@
 --
 ------------------------------------------------------------------------------->
 
+<!----------------------------------------------------------------------------->
+
+[ci]:  https://github.com/kevinmatthes/adjust/workflows/ci/badge.svg
+[gpl3]:  https://github.com/kevinmatthes/adjust/blob/main/LICENSE
+[lcns]:  https://img.shields.io/github/license/kevinmatthes/adjust
+[lst]:  https://img.shields.io/github/last-commit/kevinmatthes/adjust
+[repository]:  https://github.com/kevinmatthes/adjust
+
+<!----------------------------------------------------------------------------->
+
 # adjust
 
 ## Summary
+
+[![][ci]][repository]
+[![][lst]][repository]
+[![][lcns]][repository]
 
 Yet another text editor for the terminal, written in V.
 

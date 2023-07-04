@@ -1,0 +1,11 @@
+(
+  references: {},
+  changes: {
+    "Added": [
+      "README:  CI state, last commit, and license badges",
+      "CITATION.cff",
+      "CI:  actionlint, cffconvert, and Renovate linter",
+      "Renovate:  configuration",
+    ],
+  },
+)
