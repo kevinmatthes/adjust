@@ -1,6 +1,57 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:base"
-  ]
+  assignees: [
+    "kevinmatthes",
+  ],
+  commitMessageLowerCase: "never",
+  commitMessagePrefix: "[Renovate]",
+  dependencyDashboard: true,
+  dependencyDashboardAutoclose: true,
+  dependencyDashboardLabels: [
+    "dependencies",
+  ],
+  dependencyDashboardTitle: "[Renovate] Dependency Dashboard",
+  labels: [
+    "dependencies",
+  ],
+  packageRules: [
+    {
+      matchManagers: [
+        "regex",
+      ],
+      matchPackageNames: [
+        "actionlint",
+        "cffconvert",
+      ],
+    },
+    {
+      matchManagers: [
+        "github-actions",
+      ],
+    },
+  ],
+  regexManagers: [
+    {
+      datasourceTemplate: "github-releases",
+      depNameTemplate: "cffconvert",
+      fileMatch: [
+        "^\\.github/workflows/ci\\.yml$",
+      ],
+      matchStrings: [
+        "citationcff/cffconvert:(?<currentValue>\\d+\\.\\d+\\.\\d+)",
+      ],
+      packageNameTemplate: "citation-file-format/cff-converter-python",
+    },
+    {
+      datasourceTemplate: "github-releases",
+      depNameTemplate: "actionlint",
+      fileMatch: [
+        "^\\.github/workflows/ci\\.yml$",
+      ],
+      matchStrings: [
+        "rhysd/actionlint:(?<currentValue>\\d+\\.\\d+\\.\\d+)",
+      ],
+      packageNameTemplate: "rhysd/actionlint",
+    },
+  ],
+  schedule: null,
 }
