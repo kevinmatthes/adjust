@@ -1,0 +1,13 @@
+abstract: Yet another text editor for the terminal, written in V.
+authors:
+  - alias: kevinmatthes
+    family-names: Matthes
+    given-names: Kevin
+cff-version: 1.2.0
+date-released: 2023-07-04
+license: GPL-3.0
+message: Please cite this software using these information.
+repository-code: https://github.com/kevinmatthes/adjust
+title: adjust
+url: https://github.com/kevinmatthes/adjust
+version: 0.0.0
