@@ -19,8 +19,20 @@
 
 module main
 
+import os
+
 fn main() {
-	println('Hello World!')
+	if os.args.len > 1 {
+		if os.args.any(it == '-h' || it == '--help') {
+			println(help_message)
+		} else {
+			for file in os.args[1..] {
+				println(file)
+			}
+		}
+	} else {
+		println(help_message)
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
