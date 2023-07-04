@@ -40,7 +40,6 @@ permissions:
 
 jobs:
   actionlint:
-    name: actionlint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3.5.3
@@ -52,17 +51,16 @@ jobs:
           args: -color
 
   bors:
-    name: bors
     needs:
       - actionlint
       - cffconvert
       - renovate-linter
+      - v
     runs-on: ubuntu-latest
     steps:
       - run: bash -c 'exit 0'
 
   cffconvert:
-    name: cffconvert
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3.5.3
@@ -78,7 +76,6 @@ jobs:
           - CITATION.cff
 
   renovate-linter:
-    name: renovate-linter
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3.5.3
@@ -86,5 +83,23 @@ jobs:
           persist-credentials: false
 
       - uses: suzuki-shunsuke/github-action-renovate-config-validator@v0.1.3
+
+  v:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.5.3
+        with:
+          persist-credentials: false
+
+      - uses: vlang/setup-v@v1.3
+        with:
+          check-latest: true
+
+      - run: v ${{ matrix.v }}
+    strategy:
+      matrix:
+        v:
+          - .
+          - fmt -verify .
 
 ################################################################################
