@@ -55,7 +55,6 @@ jobs:
           crate: aeruginous
 
       - run: |
-          rustup update
           aeruginous comment-changes -d ::= -f ron -k -o changelog.d/
           git add changelog.d/
           git commit -m 'Create summary of recent changes'
