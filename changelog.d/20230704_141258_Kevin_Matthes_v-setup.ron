@@ -1,0 +1,12 @@
+(
+  references: {},
+  changes: {
+    "Added": [
+      "src/main.v",
+      ".gitignore",
+      ".gitattributes",
+      ".editorconfig",
+      "v.mod",
+    ],
+  },
+)
