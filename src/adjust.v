@@ -30,55 +30,55 @@ mut:
 	window         &terminal.Context = unsafe { nil }
 }
 
-fn (mut self Adjust) execute_command() {
-	match self.command_buffer {
+fn (mut a Adjust) execute_command() {
+	match a.command_buffer {
 		':exit', ':quit' {
 			exit(0)
 		}
 		else {}
 	}
 
-	self.command_buffer = ':'
+	a.command_buffer = ':'
 }
 
-fn (mut self Adjust) render_command_bar() {
-	self.window.draw_text(0, self.window.window_height, self.command_buffer)
+fn (mut a Adjust) render_command_bar() {
+	a.window.draw_text(0, a.window.window_height, a.command_buffer)
 }
 
-fn (mut self Adjust) render_status_bar() {
+fn (mut a Adjust) render_status_bar() {
 	mut x := 0
-	y := self.window.window_height - 1
+	y := a.window.window_height - 1
 
-	x = self.render_status_bar_mode_name(x, y)
-	x = self.render_status_bar_file_name(x, y)
+	x = a.render_status_bar_mode_name(x, y)
+	x = a.render_status_bar_file_name(x, y)
 
-	self.render_status_bar_filling(x, y)
+	a.render_status_bar_filling(x, y)
 }
 
-fn (mut self Adjust) render_status_bar_file_name(x int, y int) int {
-	file := self.files_to_edit[self.current_file]
+fn (mut a Adjust) render_status_bar_file_name(x int, y int) int {
+	file := a.files_to_edit[a.current_file]
 
-	self.window.set_bg_color(green)
-	self.window.set_color(white)
-	self.window.draw_text(x, y, ' ${file} ')
-	self.window.reset()
+	a.window.set_bg_color(green)
+	a.window.set_color(white)
+	a.window.draw_text(x, y, ' ${file} ')
+	a.window.reset()
 
 	return x + file.len + 2
 }
 
-fn (mut self Adjust) render_status_bar_filling(x int, y int) {
-	self.window.set_bg_color(green)
-	self.window.draw_line(x, y, self.window.window_width, y)
-	self.window.reset()
+fn (mut a Adjust) render_status_bar_filling(x int, y int) {
+	a.window.set_bg_color(green)
+	a.window.draw_line(x, y, a.window.window_width, y)
+	a.window.reset()
 }
 
-fn (mut self Adjust) render_status_bar_mode_name(x int, y int) int {
-	mode := self.mode.string()
+fn (mut a Adjust) render_status_bar_mode_name(x int, y int) int {
+	mode := a.mode.str()
 
-	self.window.set_bg_color(white)
-	self.window.set_color(black)
-	self.window.draw_text(x, y, ' ${mode} ')
-	self.window.reset()
+	a.window.set_bg_color(white)
+	a.window.set_color(black)
+	a.window.draw_text(x, y, ' ${mode} ')
+	a.window.reset()
 
 	return x + mode.len + 3
 }
