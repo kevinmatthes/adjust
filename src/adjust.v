@@ -19,12 +19,16 @@
 
 module main
 
+import os
+import term
 import term.ui as terminal
 
 struct Adjust {
 mut:
 	command_buffer string
 	current_file   int
+	cursor         term.Coord
+	data           []string
 	files_to_edit  []string
 	mode           Mode = .view
 	window         &terminal.Context = unsafe { nil }
@@ -50,19 +54,44 @@ fn (mut a Adjust) execute_command() {
 }
 
 fn (mut a Adjust) go_to_next_file() {
-	if a.current_file == a.files_to_edit.len - 1 {
-		a.current_file = 0
-	} else {
-		a.current_file++
+	if a.files_to_edit.len > 1 {
+		a.save_file()
+
+		if a.current_file == a.files_to_edit.len - 1 {
+			a.current_file = 0
+		} else {
+			a.current_file++
+		}
+
+		a.load_file()
 	}
 }
 
 fn (mut a Adjust) go_to_previous_file() {
-	if a.current_file == 0 {
-		a.current_file = a.files_to_edit.len - 1
-	} else {
-		a.current_file--
+	if a.files_to_edit.len > 1 {
+		a.save_file()
+
+		if a.current_file == 0 {
+			a.current_file = a.files_to_edit.len - 1
+		} else {
+			a.current_file--
+		}
+
+		a.load_file()
 	}
+}
+
+fn (mut a Adjust) load_file() {
+	if content := os.read_lines(a.files_to_edit[a.current_file]) {
+		a.data.clear()
+		a.data << content
+	}
+}
+
+fn (a Adjust) save_file() {
+	file := a.files_to_edit[a.current_file]
+	content := a.data.join('\n') + '\n'
+	os.write_file(file, content) or { panic(err) }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
