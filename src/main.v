@@ -28,7 +28,6 @@ fn main() {
 			println(help_message)
 		} else {
 			mut adjust := &Adjust{
-				current_file: os.args[1]
 				files_to_edit: os.args[1..]
 			}
 
