@@ -24,7 +24,7 @@ import term.ui as terminal
 struct Adjust {
 mut:
 	command_buffer string
-	current_file   string
+	current_file   int
 	files_to_edit  []string
 	mode           Mode = .view
 	window         &terminal.Context = unsafe { nil }
@@ -56,12 +56,14 @@ fn (mut self Adjust) render_status_bar() {
 }
 
 fn (mut self Adjust) render_status_bar_file_name(x int, y int) int {
+	file := self.files_to_edit[self.current_file]
+
 	self.window.set_bg_color(green)
 	self.window.set_color(white)
-	self.window.draw_text(x, y, ' ${self.current_file} ')
+	self.window.draw_text(x, y, ' ${file} ')
 	self.window.reset()
 
-	return x + self.current_file.len + 2
+	return x + file.len + 2
 }
 
 fn (mut self Adjust) render_status_bar_filling(x int, y int) {
