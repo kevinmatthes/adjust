@@ -49,6 +49,7 @@ fn (mut a Adjust) execute_command() {
 		}
 		':save', ':write' {
 			a.save_file()
+			a.command_buffer = ':'
 		}
 		else {
 			a.command_buffer = ':'
