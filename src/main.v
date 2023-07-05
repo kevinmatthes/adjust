@@ -31,6 +31,7 @@ fn main() {
 				files_to_edit: os.args[1..]
 			}
 
+			adjust.load_file()
 			adjust.window = terminal.init(
 				capture_events: true
 				event_fn: event_loop
