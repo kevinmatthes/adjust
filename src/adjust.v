@@ -32,15 +32,15 @@ mut:
 
 fn (mut a Adjust) execute_command() {
 	match a.command_buffer {
+		':cancel', ':view' {
+			a.mode = .view
+			a.command_buffer = ''
+		}
 		':exit', ':quit' {
 			exit(0)
 		}
 		':insert' {
 			a.mode = .insert
-			a.command_buffer = ''
-		}
-		':view' {
-			a.mode = .view
 			a.command_buffer = ''
 		}
 		else {
@@ -63,48 +63,6 @@ fn (mut a Adjust) go_to_previous_file() {
 	} else {
 		a.current_file--
 	}
-}
-
-fn (mut a Adjust) render_command_bar() {
-	a.window.draw_text(0, a.window.window_height, a.command_buffer)
-}
-
-fn (mut a Adjust) render_status_bar() {
-	mut x := 0
-	y := a.window.window_height - 1
-
-	x = a.render_status_bar_mode_name(x, y)
-	x = a.render_status_bar_file_name(x, y)
-
-	a.render_status_bar_filling(x, y)
-}
-
-fn (mut a Adjust) render_status_bar_file_name(x int, y int) int {
-	file := a.files_to_edit[a.current_file]
-
-	a.window.set_bg_color(green)
-	a.window.set_color(white)
-	a.window.draw_text(x, y, ' ${file} ')
-	a.window.reset()
-
-	return x + file.len + 2
-}
-
-fn (mut a Adjust) render_status_bar_filling(x int, y int) {
-	a.window.set_bg_color(green)
-	a.window.draw_line(x, y, a.window.window_width, y)
-	a.window.reset()
-}
-
-fn (mut a Adjust) render_status_bar_mode_name(x int, y int) int {
-	mode := a.mode.str()
-
-	a.window.set_bg_color(white)
-	a.window.set_color(black)
-	a.window.draw_text(x, y, ' ${mode} ')
-	a.window.reset()
-
-	return x + mode.len + 3
 }
 
 ////////////////////////////////////////////////////////////////////////////////
