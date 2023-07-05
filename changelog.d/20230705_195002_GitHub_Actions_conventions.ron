@@ -1,0 +1,10 @@
+(
+  references: {},
+  changes: {
+    "Fixed": [
+      "rename stringification method to meet requirements of interface",
+      "use ``in`` operator for multiple options",
+      "do not use ``self`` for instance name",
+    ],
+  },
+)
