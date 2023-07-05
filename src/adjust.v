@@ -35,10 +35,34 @@ fn (mut a Adjust) execute_command() {
 		':exit', ':quit' {
 			exit(0)
 		}
-		else {}
+		':insert' {
+			a.mode = .insert
+			a.command_buffer = ''
+		}
+		':view' {
+			a.mode = .view
+			a.command_buffer = ''
+		}
+		else {
+			a.command_buffer = ':'
+		}
 	}
+}
 
-	a.command_buffer = ':'
+fn (mut a Adjust) go_to_next_file() {
+	if a.current_file == a.files_to_edit.len - 1 {
+		a.current_file = 0
+	} else {
+		a.current_file++
+	}
+}
+
+fn (mut a Adjust) go_to_previous_file() {
+	if a.current_file == 0 {
+		a.current_file = a.files_to_edit.len - 1
+	} else {
+		a.current_file--
+	}
 }
 
 fn (mut a Adjust) render_command_bar() {

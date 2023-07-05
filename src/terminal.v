@@ -26,6 +26,14 @@ fn loop(event &terminal.Event, mut adjust Adjust) {
 		match adjust.mode {
 			.command {
 				match event.code {
+					.backspace {
+						mut runes := adjust.command_buffer.runes()
+
+						if runes.len > 1 {
+							runes.delete_last()
+							adjust.command_buffer = runes.string()
+						}
+					}
 					.enter {
 						adjust.execute_command()
 					}
@@ -53,21 +61,13 @@ fn loop(event &terminal.Event, mut adjust Adjust) {
 						adjust.command_buffer += ':'
 					}
 					.greater_than {
-						adjust.current_file += 1
-
-						if adjust.current_file == adjust.files_to_edit.len {
-							adjust.current_file = 0
-						}
+						adjust.go_to_next_file()
 					}
 					.i {
 						adjust.mode = .insert
 					}
 					.less_than {
-						adjust.current_file -= 1
-
-						if adjust.current_file < 0 {
-							adjust.current_file = adjust.files_to_edit.len - 1
-						}
+						adjust.go_to_previous_file()
 					}
 					else {}
 				}
