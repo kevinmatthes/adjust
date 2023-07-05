@@ -21,17 +21,66 @@ module main
 
 import term.ui as terminal
 
-const (
-	black = terminal.Color{0x00, 0x00, 0x00}
-	green = terminal.Color{0x11, 0xD1, 0x16}
-	white = terminal.Color{0xFF, 0xFF, 0xFF}
-)
+fn loop(event &terminal.Event, mut adjust Adjust) {
+	if event.typ == .key_down {
+		match adjust.mode {
+			.command {
+				match event.code {
+					.enter {
+						adjust.execute_command()
+					}
+					.escape {
+						adjust.mode = .view
+						adjust.command_buffer = ''
+					}
+					else {
+						adjust.command_buffer += event.utf8
+					}
+				}
+			}
+			.insert {
+				match event.code {
+					.escape {
+						adjust.mode = .view
+					}
+					else {}
+				}
+			}
+			.view {
+				match event.code {
+					.colon {
+						adjust.mode = .command
+						adjust.command_buffer += ':'
+					}
+					.greater_than {
+						adjust.current_file += 1
 
-const help_message = 'Yet another text editor for the terminal, written in V.
+						if adjust.current_file == adjust.files_to_edit.len {
+							adjust.current_file = 0
+						}
+					}
+					.i {
+						adjust.mode = .insert
+					}
+					.less_than {
+						adjust.current_file -= 1
 
-Usage:  adjust <FILE_TO_EDIT>
+						if adjust.current_file < 0 {
+							adjust.current_file = adjust.files_to_edit.len - 1
+						}
+					}
+					else {}
+				}
+			}
+		}
+	}
+}
 
-Options:
-  -h, --help   Show this help message and exit.'
+fn render(mut adjust Adjust) {
+	adjust.window.clear()
+	adjust.render_status_bar()
+	adjust.render_command_bar()
+	adjust.window.flush()
+}
 
 ////////////////////////////////////////////////////////////////////////////////

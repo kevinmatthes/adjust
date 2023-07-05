@@ -20,15 +20,25 @@
 module main
 
 import os
+import term.ui as terminal
 
 fn main() {
 	if os.args.len > 1 {
 		if os.args.any(it == '-h' || it == '--help') {
 			println(help_message)
 		} else {
-			for file in os.args[1..] {
-				println(file)
+			mut adjust := &Adjust{
+				files_to_edit: os.args[1..]
 			}
+
+			adjust.window = terminal.init(
+				capture_events: true
+				event_fn: loop
+				frame_fn: render
+				user_data: adjust
+			)
+
+			adjust.window.run()!
 		}
 	} else {
 		println(help_message)

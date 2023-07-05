@@ -21,17 +21,66 @@ module main
 
 import term.ui as terminal
 
-const (
-	black = terminal.Color{0x00, 0x00, 0x00}
-	green = terminal.Color{0x11, 0xD1, 0x16}
-	white = terminal.Color{0xFF, 0xFF, 0xFF}
-)
+struct Adjust {
+mut:
+	command_buffer string
+	current_file   int
+	files_to_edit  []string
+	mode           Mode = .view
+	window         &terminal.Context = unsafe { nil }
+}
 
-const help_message = 'Yet another text editor for the terminal, written in V.
+fn (mut self Adjust) execute_command() {
+	match self.command_buffer {
+		':exit', ':quit' {
+			exit(0)
+		}
+		else {}
+	}
 
-Usage:  adjust <FILE_TO_EDIT>
+	self.command_buffer = ':'
+}
 
-Options:
-  -h, --help   Show this help message and exit.'
+fn (mut self Adjust) render_command_bar() {
+	self.window.draw_text(0, self.window.window_height, self.command_buffer)
+}
+
+fn (mut self Adjust) render_status_bar() {
+	mut x := 0
+	y := self.window.window_height - 1
+
+	x = self.render_status_bar_mode_name(x, y)
+	x = self.render_status_bar_file_name(x, y)
+
+	self.render_status_bar_filling(x, y)
+}
+
+fn (mut self Adjust) render_status_bar_file_name(x int, y int) int {
+	file := self.files_to_edit[self.current_file]
+
+	self.window.set_bg_color(green)
+	self.window.set_color(white)
+	self.window.draw_text(x, y, ' ${file} ')
+	self.window.reset()
+
+	return x + file.len + 2
+}
+
+fn (mut self Adjust) render_status_bar_filling(x int, y int) {
+	self.window.set_bg_color(green)
+	self.window.draw_line(x, y, self.window.window_width, y)
+	self.window.reset()
+}
+
+fn (mut self Adjust) render_status_bar_mode_name(x int, y int) int {
+	mode := self.mode.string()
+
+	self.window.set_bg_color(white)
+	self.window.set_color(black)
+	self.window.draw_text(x, y, ' ${mode} ')
+	self.window.reset()
+
+	return x + mode.len + 3
+}
 
 ////////////////////////////////////////////////////////////////////////////////

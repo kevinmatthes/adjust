@@ -19,19 +19,24 @@
 
 module main
 
-import term.ui as terminal
+enum Mode {
+	command
+	insert
+	view
+}
 
-const (
-	black = terminal.Color{0x00, 0x00, 0x00}
-	green = terminal.Color{0x11, 0xD1, 0x16}
-	white = terminal.Color{0xFF, 0xFF, 0xFF}
-)
-
-const help_message = 'Yet another text editor for the terminal, written in V.
-
-Usage:  adjust <FILE_TO_EDIT>
-
-Options:
-  -h, --help   Show this help message and exit.'
+fn (m Mode) string() string {
+	return match m {
+		.command {
+			'C'
+		}
+		.insert {
+			'I'
+		}
+		.view {
+			'V'
+		}
+	}
+}
 
 ////////////////////////////////////////////////////////////////////////////////
