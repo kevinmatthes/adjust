@@ -29,7 +29,8 @@ const (
 
 const help_message = 'Yet another text editor for the terminal, written in V.
 
-Usage:  adjust <FILE_TO_EDIT>
+Usage:
+  adjust <FILE_TO_EDIT> [<FILE_TO_EDIT> [<FILE_TO_EDIT> ...]]
 
 Options:
   -h, --help   Show this help message and exit.'
