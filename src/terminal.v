@@ -25,26 +25,51 @@ fn loop(event &terminal.Event, mut adjust Adjust) {
 	if event.typ == .key_down {
 		match adjust.mode {
 			.command {
-				if event.code == .enter {
-					adjust.execute_command()
-				} else if event.code == .escape {
-					adjust.mode = .view
-					adjust.command_buffer = ''
-				} else {
-					adjust.command_buffer += event.utf8
+				match event.code {
+					.enter {
+						adjust.execute_command()
+					}
+					.escape {
+						adjust.mode = .view
+						adjust.command_buffer = ''
+					}
+					else {
+						adjust.command_buffer += event.utf8
+					}
 				}
 			}
 			.insert {
-				if event.code == .escape {
-					adjust.mode = .view
+				match event.code {
+					.escape {
+						adjust.mode = .view
+					}
+					else {}
 				}
 			}
 			.view {
-				if event.code == .colon {
-					adjust.mode = .command
-					adjust.command_buffer += ':'
-				} else if event.code == .i {
-					adjust.mode = .insert
+				match event.code {
+					.colon {
+						adjust.mode = .command
+						adjust.command_buffer += ':'
+					}
+					.greater_than {
+						adjust.current_file += 1
+
+						if adjust.current_file == adjust.files_to_edit.len {
+							adjust.current_file = 0
+						}
+					}
+					.i {
+						adjust.mode = .insert
+					}
+					.less_than {
+						adjust.current_file -= 1
+
+						if adjust.current_file < 0 {
+							adjust.current_file = adjust.files_to_edit.len - 1
+						}
+					}
+					else {}
 				}
 			}
 		}
