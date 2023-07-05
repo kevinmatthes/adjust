@@ -4,7 +4,6 @@
     "Added": [
       "enable switching between files",
       "status and command bars",
-      "src/terminal.v",
       "src/adjust.v",
       "src/mode.v",
       "colours ``black``, ``green``, and ``white``",

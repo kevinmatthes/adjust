@@ -21,47 +21,58 @@ module main
 
 import term.ui as terminal
 
-struct Adjust {
-mut:
-	command_buffer string
-	current_file   int
-	files_to_edit  []string
-	mode           Mode = .view
-	window         &terminal.Context = unsafe { nil }
-}
+fn event_loop(event &terminal.Event, mut adjust Adjust) {
+	if event.typ == .key_down {
+		match adjust.mode {
+			.command {
+				match event.code {
+					.backspace {
+						mut runes := adjust.command_buffer.runes()
 
-fn (mut a Adjust) execute_command() {
-	match a.command_buffer {
-		':cancel', ':view' {
-			a.mode = .view
-			a.command_buffer = ''
+						if runes.len > 1 {
+							runes.delete_last()
+							adjust.command_buffer = runes.string()
+						}
+					}
+					.enter {
+						adjust.execute_command()
+					}
+					.escape {
+						adjust.mode = .view
+						adjust.command_buffer = ''
+					}
+					else {
+						adjust.command_buffer += event.utf8
+					}
+				}
+			}
+			.insert {
+				match event.code {
+					.escape {
+						adjust.mode = .view
+					}
+					else {}
+				}
+			}
+			.view {
+				match event.code {
+					.colon {
+						adjust.mode = .command
+						adjust.command_buffer += ':'
+					}
+					.greater_than {
+						adjust.go_to_next_file()
+					}
+					.i {
+						adjust.mode = .insert
+					}
+					.less_than {
+						adjust.go_to_previous_file()
+					}
+					else {}
+				}
+			}
 		}
-		':exit', ':quit' {
-			exit(0)
-		}
-		':insert' {
-			a.mode = .insert
-			a.command_buffer = ''
-		}
-		else {
-			a.command_buffer = ':'
-		}
-	}
-}
-
-fn (mut a Adjust) go_to_next_file() {
-	if a.current_file == a.files_to_edit.len - 1 {
-		a.current_file = 0
-	} else {
-		a.current_file++
-	}
-}
-
-fn (mut a Adjust) go_to_previous_file() {
-	if a.current_file == 0 {
-		a.current_file = a.files_to_edit.len - 1
-	} else {
-		a.current_file--
 	}
 }
 

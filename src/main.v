@@ -33,7 +33,7 @@ fn main() {
 
 			adjust.window = terminal.init(
 				capture_events: true
-				event_fn: loop
+				event_fn: event_loop
 				frame_fn: render
 				user_data: adjust
 			)
