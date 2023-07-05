@@ -24,7 +24,7 @@ import term.ui as terminal
 
 fn main() {
 	if os.args.len > 1 {
-		if os.args.any(it == '-h' || it == '--help') {
+		if os.args.any(it in ['-h', '--help']) {
 			println(help_message)
 		} else {
 			mut adjust := &Adjust{
