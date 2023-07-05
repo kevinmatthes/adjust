@@ -40,12 +40,15 @@ fn (mut a Adjust) execute_command() {
 			a.mode = .view
 			a.command_buffer = ''
 		}
+		':edit', ':insert' {
+			a.mode = .insert
+			a.command_buffer = ''
+		}
 		':exit', ':quit' {
 			exit(0)
 		}
-		':insert' {
-			a.mode = .insert
-			a.command_buffer = ''
+		':save', ':write' {
+			a.save_file()
 		}
 		else {
 			a.command_buffer = ':'
