@@ -25,7 +25,7 @@ enum Mode {
 	view
 }
 
-fn (m Mode) string() string {
+fn (m Mode) str() string {
 	return match m {
 		.command {
 			'C'
