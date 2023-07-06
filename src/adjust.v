@@ -65,6 +65,14 @@ fn (mut a Adjust) execute_command() {
 		}
 		':exit', ':leave', ':quit' {
 			a.save_file()
+
+			for file in a.files_to_edit {
+				if os.file_ext(file) == '.v' {
+					os.execute('v fmt -w .')
+					break
+				}
+			}
+
 			exit(0)
 		}
 		':exit unchanged', ':leave unchanged', ':quit unchanged' {
@@ -114,6 +122,10 @@ fn (mut a Adjust) load_file() {
 
 	if content := os.read_lines(a.files_to_edit[a.current_file]) {
 		a.data << content
+
+		for i, line in a.data {
+			a.data[i] = line.replace('\t', ' '.repeat(8))
+		}
 	} else {
 		a.data << ''
 	}
