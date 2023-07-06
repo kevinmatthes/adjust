@@ -20,15 +20,20 @@
 module main
 
 import os
+import os.cmdline as cmd
 import term.ui as terminal
 
 fn main() {
 	if os.args.len > 1 {
-		if os.args.any(it in ['-h', '--help']) {
+		args := os.args[1..]
+		options := cmd.only_options(args)
+		files := cmd.only_non_options(args)
+
+		if options.any(it in ['-h', '--help']) || files.len == 0 {
 			println(help_message)
 		} else {
 			mut adjust := &Adjust{
-				files_to_edit: os.args[1..]
+				files_to_edit: files
 			}
 
 			adjust.load_file()
