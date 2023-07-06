@@ -46,7 +46,7 @@ fn (mut a Adjust) render_line(i int) bool {
 		line := ' ${number} │ ${data}'.runes()
 		take := math.min(line.len, a.window.window_width)
 
-		a.window.draw_text(0, i, line[..take].string())
+		a.window.draw_text(0, i - a.first_line, line[..take].string())
 
 		true
 	} else {
@@ -56,7 +56,7 @@ fn (mut a Adjust) render_line(i int) bool {
 
 fn (mut a Adjust) render_lines() {
 	for i in 1 .. a.window.window_height - 1 {
-		if !a.render_line(i) {
+		if !a.render_line(i + a.first_line) {
 			break
 		}
 	}
@@ -74,13 +74,14 @@ fn (mut a Adjust) render_status_bar() {
 
 fn (mut a Adjust) render_status_bar_file_name(x int, y int) int {
 	file := a.files_to_edit[a.current_file]
+	position := ' ${a.text_cursor.x} : ${a.text_cursor.y} @ ${file} '
 
 	a.window.set_bg_color(a.background)
 	a.window.set_color(a.foreground)
-	a.window.draw_text(x, y, ' ${file} ')
+	a.window.draw_text(x, y, position)
 	a.window.reset()
 
-	return x + file.len + 2
+	return x + position.len
 }
 
 fn (mut a Adjust) render_status_bar_filling(x int, y int) {

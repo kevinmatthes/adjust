@@ -19,83 +19,52 @@
 
 module main
 
-import term.ui as terminal
+fn (mut a Adjust) move_cursor_down() {
+	if a.text_cursor.y < a.data.len {
+		a.move_cursor_start()
+		a.text_cursor.y++
 
-fn event_loop(event &terminal.Event, mut adjust Adjust) {
-	if event.typ == .key_down {
-		match adjust.mode {
-			.command {
-				match event.code {
-					.backspace {
-						mut runes := adjust.command_buffer.runes()
+		if a.viewport_cursor.y == a.window.window_height - 2 {
+			a.first_line++
+		} else {
+			a.viewport_cursor.y++
+		}
+	}
+}
 
-						if runes.len > 1 {
-							runes.delete_last()
-							adjust.command_buffer = runes.string()
-						}
-					}
-					.enter {
-						adjust.execute_command()
-					}
-					.escape {
-						adjust.mode = .view
-						adjust.command_buffer = ''
-					}
-					else {
-						adjust.command_buffer += event.utf8
-					}
-				}
-			}
-			.insert {
-				match event.code {
-					.down {
-						adjust.move_cursor_down()
-					}
-					.escape {
-						adjust.mode = .view
-					}
-					.left {
-						adjust.move_cursor_left()
-					}
-					.right {
-						adjust.move_cursor_right()
-					}
-					.up {
-						adjust.move_cursor_up()
-					}
-					else {}
-				}
-			}
-			.view {
-				match event.code {
-					.colon {
-						adjust.mode = .command
-						adjust.command_buffer += ':'
-					}
-					.down {
-						adjust.move_cursor_down()
-					}
-					.greater_than {
-						adjust.go_to_next_file()
-					}
-					.i {
-						adjust.mode = .insert
-					}
-					.left {
-						adjust.move_cursor_left()
-					}
-					.less_than {
-						adjust.go_to_previous_file()
-					}
-					.right {
-						adjust.move_cursor_right()
-					}
-					.up {
-						adjust.move_cursor_up()
-					}
-					else {}
-				}
-			}
+fn (mut a Adjust) move_cursor_left() {
+	if a.text_cursor.x > 0 {
+		a.text_cursor.x--
+		a.viewport_cursor.x--
+	}
+}
+
+fn (mut a Adjust) move_cursor_right() {
+	end_of_line := a.data[a.text_cursor.y - 1].len
+	end_of_window := a.window.window_width - 1
+
+	if a.text_cursor.x < end_of_line && a.viewport_cursor.x < end_of_window {
+		a.text_cursor.x++
+		a.viewport_cursor.x++
+	}
+}
+
+fn (mut a Adjust) move_cursor_start() {
+	if a.text_cursor.x != 0 {
+		a.text_cursor.x = 0
+		a.viewport_cursor.x = a.line_number_filling + 6
+	}
+}
+
+fn (mut a Adjust) move_cursor_up() {
+	if a.text_cursor.y > 1 {
+		a.move_cursor_start()
+		a.text_cursor.y--
+
+		if a.viewport_cursor.y > 1 {
+			a.viewport_cursor.y--
+		} else if a.first_line > 0 {
+			a.first_line--
 		}
 	}
 }
