@@ -48,6 +48,16 @@ fn event_loop(event &terminal.Event, mut adjust Adjust) {
 			}
 			.insert {
 				match event.code {
+					.backspace {
+						mut runes := adjust.data[adjust.text_cursor.y - 1].runes()
+
+						if runes.len > 0 && adjust.text_cursor.x > 0 {
+							runes.delete(adjust.text_cursor.x - 1)
+							adjust.data[adjust.text_cursor.y - 1] = runes.string()
+							adjust.text_cursor.x--
+							adjust.viewport_cursor.x--
+						}
+					}
 					.down {
 						adjust.move_cursor_down()
 					}
@@ -63,7 +73,15 @@ fn event_loop(event &terminal.Event, mut adjust Adjust) {
 					.up {
 						adjust.move_cursor_up()
 					}
-					else {}
+					else {
+						index := adjust.text_cursor.y - 1
+						mut line := adjust.data[index].runes()
+
+						line.insert(adjust.text_cursor.x, event.utf8.runes())
+						adjust.data[index] = line.string()
+						adjust.text_cursor.x++
+						adjust.viewport_cursor.x++
+					}
 				}
 			}
 			.view {
