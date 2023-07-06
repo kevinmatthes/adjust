@@ -22,18 +22,21 @@ module main
 import os
 import term
 import term.ui as terminal
+import math
 
 struct Adjust {
 mut:
-	background     terminal.Color = konsole_green
-	command_buffer string
-	current_file   int
-	cursor         term.Coord
-	data           []string
-	files_to_edit  []string
-	foreground     terminal.Color = white
-	mode           Mode = .view
-	window         &terminal.Context = unsafe { nil }
+	background          terminal.Color = konsole_green
+	command_buffer      string
+	current_file        int
+	data                []string
+	files_to_edit       []string
+	foreground          terminal.Color = white
+	line_number_filling int
+	mode                Mode = .view
+	text_cursor         term.Coord
+	viewport_cursor     term.Coord
+	window              &terminal.Context = unsafe { nil }
 }
 
 fn (mut a Adjust) determine_language_colours() {
@@ -113,6 +116,10 @@ fn (mut a Adjust) load_file() {
 	} else {
 		a.data << ''
 	}
+
+	a.line_number_filling = int(math.log10(a.data.len + 1))
+	a.viewport_cursor.x = a.line_number_filling + 6
+	a.viewport_cursor.y = 0
 }
 
 fn (a Adjust) save_file() {

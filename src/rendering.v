@@ -19,8 +19,11 @@
 
 module main
 
+import math
+
 fn render(mut adjust Adjust) {
 	adjust.window.clear()
+	adjust.render_lines()
 	adjust.render_status_bar()
 	adjust.render_command_bar()
 	adjust.render_cursor()
@@ -32,7 +35,31 @@ fn (mut a Adjust) render_command_bar() {
 }
 
 fn (mut a Adjust) render_cursor() {
-	a.window.set_cursor_position(a.cursor.x, a.cursor.y)
+	a.window.set_cursor_position(a.viewport_cursor.x, a.viewport_cursor.y)
+}
+
+fn (mut a Adjust) render_line(i int) bool {
+	return if i - 1 < a.data.len {
+		data := a.data[i - 1].replace('\t', ' '.repeat(8))
+		times := a.line_number_filling - int(math.log10(i + 1))
+		number := '${' '.repeat(times)}${i}'
+		line := ' ${number} │ ${data}'.runes()
+		take := math.min(line.len, a.window.window_width)
+
+		a.window.draw_text(0, i, line[..take].string())
+
+		true
+	} else {
+		false
+	}
+}
+
+fn (mut a Adjust) render_lines() {
+	for i in 1 .. a.window.window_height - 1 {
+		if !a.render_line(i) {
+			break
+		}
+	}
 }
 
 fn (mut a Adjust) render_status_bar() {

@@ -1,0 +1,11 @@
+(
+  references: {},
+  changes: {
+    "Added": [
+      "prepare scrolling",
+      "do not wrap overlong lines",
+      "save line number filling width as editor data",
+      "render lines of opened file",
+    ],
+  },
+)
