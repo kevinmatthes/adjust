@@ -1,0 +1,11 @@
+(
+  references: {},
+  changes: {
+    "Added": [
+      "``:save``, ``:write``, and ``:edit`` commands",
+      "set cursor to last saved position",
+      "automatically load first given file",
+      "save and load files",
+    ],
+  },
+)

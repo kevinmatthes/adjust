@@ -23,11 +23,16 @@ fn render(mut adjust Adjust) {
 	adjust.window.clear()
 	adjust.render_status_bar()
 	adjust.render_command_bar()
+	adjust.render_cursor()
 	adjust.window.flush()
 }
 
 fn (mut a Adjust) render_command_bar() {
 	a.window.draw_text(0, a.window.window_height, a.command_buffer)
+}
+
+fn (mut a Adjust) render_cursor() {
+	a.window.set_cursor_position(a.cursor.x, a.cursor.y)
 }
 
 fn (mut a Adjust) render_status_bar() {
