@@ -31,6 +31,7 @@ mut:
 	current_file        int
 	data                []string
 	files_to_edit       []string
+	first_line          int
 	foreground          terminal.Color = white
 	line_number_filling int
 	mode                Mode = .view
@@ -118,8 +119,10 @@ fn (mut a Adjust) load_file() {
 	}
 
 	a.line_number_filling = int(math.log10(a.data.len + 1))
+	a.text_cursor.x = 0
+	a.text_cursor.y = 1
 	a.viewport_cursor.x = a.line_number_filling + 6
-	a.viewport_cursor.y = 0
+	a.viewport_cursor.y = 1
 }
 
 fn (a Adjust) save_file() {
