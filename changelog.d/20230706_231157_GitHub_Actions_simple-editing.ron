@@ -1,0 +1,9 @@
+(
+  references: {},
+  changes: {
+    "Added": [
+      "enable simple editing in exising lines",
+      "format V source files on quit",
+    ],
+  },
+)
