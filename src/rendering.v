@@ -39,13 +39,14 @@ fn (mut a Adjust) render_cursor() {
 }
 
 fn (mut a Adjust) render_lines() {
-	filling := int(math.log10(a.data.len + 1))
-
 	for i in 1 .. a.window.window_height - 1 {
 		if i - 1 < a.data.len {
-			repeat := filling - int(math.log10(i + 1))
-			line := ' ${' '.repeat(repeat)}${i} | ${a.data[i - 1]}'
-			a.window.draw_text(0, i, line)
+			data := a.data[i - 1].replace('\t', ' '.repeat(8))
+			times := a.line_number_filling - int(math.log10(i + 1))
+			number := '${' '.repeat(times)}${i}'
+			line := ' ${number} │ ${data}'.runes()
+			take := math.min(line.len, a.window.window_width)
+			a.window.draw_text(0, i, line[..take].string())
 		}
 	}
 }
