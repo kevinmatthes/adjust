@@ -48,8 +48,20 @@ fn event_loop(event &terminal.Event, mut adjust Adjust) {
 			}
 			.insert {
 				match event.code {
+					.down {
+						adjust.move_cursor_down()
+					}
 					.escape {
 						adjust.mode = .view
+					}
+					.left {
+						adjust.move_cursor_left()
+					}
+					.right {
+						adjust.move_cursor_right()
+					}
+					.up {
+						adjust.move_cursor_up()
 					}
 					else {}
 				}
@@ -60,14 +72,26 @@ fn event_loop(event &terminal.Event, mut adjust Adjust) {
 						adjust.mode = .command
 						adjust.command_buffer += ':'
 					}
+					.down {
+						adjust.move_cursor_down()
+					}
 					.greater_than {
 						adjust.go_to_next_file()
 					}
 					.i {
 						adjust.mode = .insert
 					}
+					.left {
+						adjust.move_cursor_left()
+					}
 					.less_than {
 						adjust.go_to_previous_file()
+					}
+					.right {
+						adjust.move_cursor_right()
+					}
+					.up {
+						adjust.move_cursor_up()
 					}
 					else {}
 				}
