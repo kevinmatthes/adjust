@@ -25,13 +25,28 @@ import term.ui as terminal
 
 struct Adjust {
 mut:
+	background     terminal.Color = konsole_green
 	command_buffer string
 	current_file   int
 	cursor         term.Coord
 	data           []string
 	files_to_edit  []string
+	foreground     terminal.Color = white
 	mode           Mode = .view
 	window         &terminal.Context = unsafe { nil }
+}
+
+fn (mut a Adjust) determine_language_colours() {
+	file := a.files_to_edit[a.current_file]
+
+	a.background, a.foreground = match os.file_ext(file) {
+		'.v' {
+			linguist_v, black
+		}
+		else {
+			konsole_green, white
+		}
+	}
 }
 
 fn (mut a Adjust) execute_command() {
@@ -44,7 +59,11 @@ fn (mut a Adjust) execute_command() {
 			a.mode = .insert
 			a.command_buffer = ''
 		}
-		':exit', ':quit' {
+		':exit', ':leave', ':quit' {
+			a.save_file()
+			exit(0)
+		}
+		':exit unchanged', ':leave unchanged', ':quit unchanged' {
 			exit(0)
 		}
 		':save', ':write' {
@@ -86,9 +105,13 @@ fn (mut a Adjust) go_to_previous_file() {
 }
 
 fn (mut a Adjust) load_file() {
+	a.data.clear()
+	a.determine_language_colours()
+
 	if content := os.read_lines(a.files_to_edit[a.current_file]) {
-		a.data.clear()
 		a.data << content
+	} else {
+		a.data << ''
 	}
 }
 

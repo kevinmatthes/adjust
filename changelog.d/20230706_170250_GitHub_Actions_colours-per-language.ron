@@ -1,0 +1,10 @@
+(
+  references: {},
+  changes: {
+    "Added": [
+      "render status bar in Linguist colour, if available",
+      "detect language by file extension",
+      "Linguist colour for V",
+    ],
+  },
+)
