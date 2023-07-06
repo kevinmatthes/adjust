@@ -38,15 +38,26 @@ fn (mut a Adjust) render_cursor() {
 	a.window.set_cursor_position(a.viewport_cursor.x, a.viewport_cursor.y)
 }
 
+fn (mut a Adjust) render_line(i int) bool {
+	return if i - 1 < a.data.len {
+		data := a.data[i - 1].replace('\t', ' '.repeat(8))
+		times := a.line_number_filling - int(math.log10(i + 1))
+		number := '${' '.repeat(times)}${i}'
+		line := ' ${number} │ ${data}'.runes()
+		take := math.min(line.len, a.window.window_width)
+
+		a.window.draw_text(0, i, line[..take].string())
+
+		true
+	} else {
+		false
+	}
+}
+
 fn (mut a Adjust) render_lines() {
 	for i in 1 .. a.window.window_height - 1 {
-		if i - 1 < a.data.len {
-			data := a.data[i - 1].replace('\t', ' '.repeat(8))
-			times := a.line_number_filling - int(math.log10(i + 1))
-			number := '${' '.repeat(times)}${i}'
-			line := ' ${number} │ ${data}'.runes()
-			take := math.min(line.len, a.window.window_width)
-			a.window.draw_text(0, i, line[..take].string())
+		if !a.render_line(i) {
+			break
 		}
 	}
 }
