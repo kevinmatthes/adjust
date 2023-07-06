@@ -35,7 +35,7 @@ fn (mut a Adjust) render_command_bar() {
 }
 
 fn (mut a Adjust) render_cursor() {
-	a.window.set_cursor_position(a.cursor.x, a.cursor.y)
+	a.window.set_cursor_position(a.viewport_cursor.x, a.viewport_cursor.y)
 }
 
 fn (mut a Adjust) render_lines() {
