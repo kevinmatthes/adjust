@@ -1,0 +1,10 @@
+(
+  references: {},
+  changes: {
+    "Added": [
+      "prepare support for delete key",
+      "Linguist colour for Nim",
+      "src/remove_keys.v",
+    ],
+  },
+)
