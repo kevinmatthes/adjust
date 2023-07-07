@@ -1,0 +1,8 @@
+(
+  references: {},
+  changes: {
+    "Added": [
+      "stay in the same column, if possible, while moving the cursor",
+    ],
+  },
+)
