@@ -64,6 +64,9 @@ fn event_loop(event &terminal.Event, mut adjust Adjust) {
 					.escape {
 						adjust.mode = .view
 					}
+					.home {
+						adjust.move_cursor_start()
+					}
 					.left {
 						adjust.move_cursor_left()
 					}
@@ -95,6 +98,9 @@ fn event_loop(event &terminal.Event, mut adjust Adjust) {
 					}
 					.greater_than {
 						adjust.go_to_next_file()
+					}
+					.home {
+						adjust.move_cursor_start()
 					}
 					.i {
 						adjust.mode = .insert
