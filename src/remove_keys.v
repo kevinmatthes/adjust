@@ -19,22 +19,9 @@
 
 module main
 
-import term.ui as terminal
-
-const (
-	black         = terminal.Color{0x00, 0x00, 0x00}
-	konsole_green = terminal.Color{0x11, 0xD1, 0x16}
-	linguist_nim  = terminal.Color{0xFF, 0xC2, 0x00}
-	linguist_v    = terminal.Color{0x4F, 0x87, 0xC4}
-	white         = terminal.Color{0xFF, 0xFF, 0xFF}
-)
-
-const help_message = 'Yet another text editor for the terminal, written in V.
-
-Usage:
-  adjust <FILE_TO_EDIT> [<FILE_TO_EDIT> [<FILE_TO_EDIT> ...]]
-
-Options:
-  -h, --help   Show this help message and exit.'
+enum RemoveKey {
+	backspace
+	delete
+}
 
 ////////////////////////////////////////////////////////////////////////////////
