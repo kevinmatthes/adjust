@@ -77,13 +77,15 @@ fn event_loop(event &terminal.Event, mut adjust Adjust) {
 						adjust.move_cursor_up()
 					}
 					else {
-						index := adjust.text_cursor.y - 1
-						mut line := adjust.data[index].runes()
+						if adjust.viewport_cursor.x < adjust.window.window_width {
+							index := adjust.text_cursor.y - 1
+							mut line := adjust.data[index].runes()
 
-						line.insert(adjust.text_cursor.x, event.utf8.runes())
-						adjust.data[index] = line.string()
-						adjust.text_cursor.x++
-						adjust.viewport_cursor.x++
+							line.insert(adjust.text_cursor.x, event.utf8.runes())
+							adjust.data[index] = line.string()
+							adjust.text_cursor.x++
+							adjust.viewport_cursor.x++
+						}
 					}
 				}
 			}
