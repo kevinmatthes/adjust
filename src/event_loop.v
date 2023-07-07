@@ -54,6 +54,9 @@ fn event_loop(event &terminal.Event, mut adjust Adjust) {
 					.down {
 						adjust.move_cursor_down()
 					}
+					.end {
+						adjust.move_cursor_end()
+					}
 					.escape {
 						adjust.mode = .view
 					}
@@ -82,6 +85,9 @@ fn event_loop(event &terminal.Event, mut adjust Adjust) {
 					}
 					.down {
 						adjust.move_cursor_down()
+					}
+					.end {
+						adjust.move_cursor_end()
 					}
 					.greater_than {
 						adjust.go_to_next_file()
