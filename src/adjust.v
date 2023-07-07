@@ -44,11 +44,24 @@ fn (mut a Adjust) determine_language_colours() {
 	file := a.files_to_edit[a.current_file]
 
 	a.background, a.foreground = match os.file_ext(file) {
-		'.v' {
+		'.nim', '.nimble', '.nimrod', '.nims' {
+			linguist_nim, white
+		}
+		'.v', '.vsh', '.vv' {
 			linguist_v, black
 		}
 		else {
-			konsole_green, white
+			match file {
+				'nim.cfg' {
+					linguist_nim, white
+				}
+				'v.mod' {
+					linguist_v, black
+				}
+				else {
+					konsole_green, white
+				}
+			}
 		}
 	}
 }
@@ -116,18 +129,32 @@ fn (mut a Adjust) go_to_previous_file() {
 	}
 }
 
+fn (mut a Adjust) insert_text(s string) {
+	if a.viewport_cursor.x < a.window.window_width {
+		index := a.text_cursor.y - 1
+		mut line := a.data[index].runes()
+
+		line.insert(a.text_cursor.x, s.runes())
+		a.data[index] = line.string()
+		a.text_cursor.x++
+		a.viewport_cursor.x++
+	}
+}
+
 fn (mut a Adjust) load_file() {
 	a.data.clear()
 	a.determine_language_colours()
 
 	if content := os.read_lines(a.files_to_edit[a.current_file]) {
 		a.data << content
+	}
 
-		for i, line in a.data {
-			a.data[i] = line.replace('\t', ' '.repeat(8))
-		}
-	} else {
+	if a.data.len == 0 {
 		a.data << ''
+	}
+
+	for i, line in a.data {
+		a.data[i] = line.replace('\t', ' '.repeat(8))
 	}
 
 	a.line_number_filling = int(math.log10(a.data.len + 1))
@@ -135,6 +162,23 @@ fn (mut a Adjust) load_file() {
 	a.text_cursor.y = 1
 	a.viewport_cursor.x = a.line_number_filling + 6
 	a.viewport_cursor.y = 1
+}
+
+fn (mut a Adjust) remove_text(r RemoveKey) {
+	line := a.text_cursor.y - 1
+	mut runes := a.data[line].runes()
+
+	match r {
+		.backspace {
+			if runes.len > 0 && a.text_cursor.x > 0 {
+				runes.delete(a.text_cursor.x - 1)
+				a.data[line] = runes.string()
+				a.text_cursor.x--
+				a.viewport_cursor.x--
+			}
+		}
+		.delete {}
+	}
 }
 
 fn (a Adjust) save_file() {
