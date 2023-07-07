@@ -19,6 +19,8 @@
 
 module main
 
+import math
+
 fn (mut a Adjust) move_cursor_down() {
 	if a.text_cursor.y < a.data.len {
 		a.move_cursor_start()
@@ -29,6 +31,20 @@ fn (mut a Adjust) move_cursor_down() {
 		} else {
 			a.viewport_cursor.y++
 		}
+	}
+}
+
+fn (mut a Adjust) move_cursor_end() {
+	end_of_line := a.data[a.text_cursor.y - 1].len
+	end_of_window := a.window.window_width
+	offset := a.line_number_filling + 6
+
+	if math.min(end_of_line, end_of_window) == end_of_line {
+		a.text_cursor.x = end_of_line
+		a.viewport_cursor.x = end_of_line + offset
+	} else {
+		a.text_cursor.x = end_of_window - offset
+		a.viewport_cursor.x = end_of_window
 	}
 }
 
