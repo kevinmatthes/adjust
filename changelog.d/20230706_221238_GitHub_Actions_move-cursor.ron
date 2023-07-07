@@ -4,7 +4,7 @@
     "Added": [
       "src/cursor_movement.v",
       "enable cursor movement with arrow keys",
-      "CI:  ``v vet -W .``",
+      "CI:  ``v vet -W src/``",
       "use ``os.cmdline`` features for CLI flags",
     ],
   },

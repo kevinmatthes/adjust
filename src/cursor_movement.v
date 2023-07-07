@@ -41,7 +41,7 @@ fn (mut a Adjust) move_cursor_left() {
 
 fn (mut a Adjust) move_cursor_right() {
 	end_of_line := a.data[a.text_cursor.y - 1].len
-	end_of_window := a.window.window_width - 1
+	end_of_window := a.window.window_width
 
 	if a.text_cursor.x < end_of_line && a.viewport_cursor.x < end_of_window {
 		a.text_cursor.x++
