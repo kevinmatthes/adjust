@@ -23,13 +23,16 @@ import math
 
 fn (mut a Adjust) move_cursor_down() {
 	if a.text_cursor.y < a.data.len {
-		a.move_cursor_start()
 		a.text_cursor.y++
 
 		if a.viewport_cursor.y == a.window.window_height - 2 {
 			a.first_line++
 		} else {
 			a.viewport_cursor.y++
+		}
+
+		if a.text_cursor.x > a.data[a.text_cursor.y - 1].len {
+			a.move_cursor_end()
 		}
 	}
 }
@@ -74,13 +77,16 @@ fn (mut a Adjust) move_cursor_start() {
 
 fn (mut a Adjust) move_cursor_up() {
 	if a.text_cursor.y > 1 {
-		a.move_cursor_start()
 		a.text_cursor.y--
 
 		if a.viewport_cursor.y > 1 {
 			a.viewport_cursor.y--
 		} else if a.first_line > 0 {
 			a.first_line--
+		}
+
+		if a.text_cursor.x > a.data[a.text_cursor.y - 1].len {
+			a.move_cursor_end()
 		}
 	}
 }
