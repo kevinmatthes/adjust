@@ -1,0 +1,10 @@
+(
+  references: {},
+  changes: {
+    "Added": [
+      "Linguist colours for Markdown, Rust, and YAML",
+      "README:  license information and acknowledgments",
+      "src/enums.v",
+    ],
+  },
+)
