@@ -32,8 +32,10 @@
 
 [ci]:  https://github.com/kevinmatthes/adjust/workflows/ci/badge.svg
 [gpl3]:  https://github.com/kevinmatthes/adjust/blob/main/LICENSE
-[lcns]:  https://img.shields.io/github/license/kevinmatthes/adjust
-[lst]:  https://img.shields.io/github/last-commit/kevinmatthes/adjust
+[last]:  https://img.shields.io/github/last-commit/kevinmatthes/adjust
+[license]:  https://img.shields.io/github/license/kevinmatthes/adjust
+[linguist]:  https://github.com/github-linguist/linguist
+[moe]:  https://github.com/fox0430/moe
 [repository]:  https://github.com/kevinmatthes/adjust
 
 <!----------------------------------------------------------------------------->
@@ -43,8 +45,8 @@
 ## Summary
 
 [![][ci]][repository]
-[![][lst]][repository]
-[![][lcns]][repository]
+[![][last]][repository]
+[![][license]][repository]
 
 Yet another text editor for the terminal, written in V.
 
@@ -71,11 +73,11 @@ follows:
 
 ## Acknowledgments
 
-- [fox0430/moe](https://github.com/fox0430/moe), especially its non-Vim
-  commands, inspired the general design of `adjust`.
-- [github-linguist/linguist](https://github.com/github-linguist/linguist)
-  defines a mapping of coding languages to colours which is used to render the
-  "Languages" statistics for each GitHub repository, making it a well-known
-  convention also applied to the design of `adjust`'s status bar.
+- [fox0430/moe][moe], especially its non-Vim commands, inspired the general
+  design of `adjust`.
+- [github-linguist/linguist][linguist] defines a mapping of coding languages to
+  colours which is used to render the "Languages" statistics for each GitHub
+  repository, making it a well-known convention also applied to the design of
+  `adjust`'s status bar.
 
 <!----------------------------------------------------------------------------->
