@@ -42,10 +42,10 @@ fn (mut a Adjust) render_line(i int) bool {
 	return if i - 1 < a.data.len {
 		times := a.line_number_filling - int(math.log10(i + 1))
 		number := '${' '.repeat(times)}${i}'
-		line := ' ${number} │ ${a.data[i - 1]}'.runes()
-		take := math.min(line.len, a.window.window_width)
+		mut line := ' ${number} │ ${a.data[i - 1]}'.runes()
+		line.trim(a.window.window_width)
 
-		a.window.draw_text(0, i - a.first_line, line[..take].string())
+		a.window.draw_text(0, i - a.first_line, line.string())
 
 		true
 	} else {
