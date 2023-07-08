@@ -19,6 +19,26 @@
 
 module main
 
+enum Mode {
+	command
+	insert
+	view
+}
+
+fn (m Mode) str() string {
+	return match m {
+		.command {
+			'C'
+		}
+		.insert {
+			'I'
+		}
+		.view {
+			'V'
+		}
+	}
+}
+
 enum RemoveKey {
 	backspace
 	delete
