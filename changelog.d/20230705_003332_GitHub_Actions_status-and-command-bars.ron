@@ -5,8 +5,7 @@
       "enable switching between files",
       "status and command bars",
       "src/adjust.v",
-      "src/mode.v",
-      "colours ``black``, ``green``, and ``white``",
+      "colours ``black``, ``konsole_green``, and ``white``",
     ],
   },
 )
