@@ -48,4 +48,34 @@
 
 Yet another text editor for the terminal, written in V.
 
+## License
+
+This project's license is **GPL-3.0**.  The whole license text can be found
+in [`LICENSE`][gpl3] in the repository root.  The brief version is as
+follows:
+
+> Copyright (C) 2023 Kevin Matthes
+>
+> This program is free software: you can redistribute it and/or modify
+> it under the terms of the GNU General Public License as published by
+> the Free Software Foundation, either version 3 of the License, or
+> (at your option) any later version.
+>
+> This program is distributed in the hope that it will be useful,
+> but WITHOUT ANY WARRANTY; without even the implied warranty of
+> MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+> GNU General Public License for more details.
+>
+> You should have received a copy of the GNU General Public License
+> along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+## Acknowledgments
+
+- [fox0430/moe](https://github.com/fox0430/moe), especially its non-Vim
+  commands, inspired the general design of `adjust`.
+- [github-linguist/linguist](https://github.com/github-linguist/linguist)
+  defines a mapping of coding languages to colours which is used to render the
+  "Languages" statistics for each GitHub repository, making it a well-known
+  convention also applied to the design of `adjust`'s status bar.
+
 <!----------------------------------------------------------------------------->
