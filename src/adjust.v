@@ -44,8 +44,17 @@ fn (mut a Adjust) determine_language_colours() {
 	file := a.files_to_edit[a.current_file]
 
 	a.background, a.foreground = match os.file_ext(file) {
+		'.cff', '.yaml', '.yml' {
+			linguist_yaml, white
+		}
+		'.markdown', '.md', '.mdown', '.mdwn', '.mkd', '.mkdn', '.mkdown' {
+			linguist_markdown, white
+		}
 		'.nim', '.nimble', '.nimrod', '.nims' {
 			linguist_nim, white
+		}
+		'.rs' {
+			linguist_rust, black
 		}
 		'.v', '.vsh', '.vv' {
 			linguist_v, black
