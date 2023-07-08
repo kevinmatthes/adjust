@@ -22,11 +22,14 @@ module main
 import term.ui as terminal
 
 const (
-	black         = terminal.Color{0x00, 0x00, 0x00}
-	konsole_green = terminal.Color{0x11, 0xD1, 0x16}
-	linguist_nim  = terminal.Color{0xFF, 0xC2, 0x00}
-	linguist_v    = terminal.Color{0x4F, 0x87, 0xC4}
-	white         = terminal.Color{0xFF, 0xFF, 0xFF}
+	black             = terminal.Color{0x00, 0x00, 0x00}
+	konsole_green     = terminal.Color{0x11, 0xD1, 0x16}
+	linguist_markdown = terminal.Color{0x08, 0x3F, 0xA1}
+	linguist_nim      = terminal.Color{0xFF, 0xC2, 0x00}
+	linguist_rust     = terminal.Color{0xDE, 0xA5, 0x84}
+	linguist_v        = terminal.Color{0x4F, 0x87, 0xC4}
+	linguist_yaml     = terminal.Color{0xCB, 0x17, 0x1E}
+	white             = terminal.Color{0xFF, 0xFF, 0xFF}
 )
 
 const help_message = 'Yet another text editor for the terminal, written in V.
