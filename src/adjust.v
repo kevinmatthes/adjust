@@ -22,7 +22,6 @@ module main
 import os
 import term
 import term.ui as terminal
-import math
 
 struct Adjust {
 mut:
@@ -86,19 +85,16 @@ fn (mut a Adjust) execute_command() {
 			a.command_buffer = ''
 		}
 		':exit', ':leave', ':quit' {
-			a.save_file()
-
-			for file in a.files_to_edit {
-				if os.file_ext(file) == '.v' {
-					os.execute('v fmt -w .')
-					break
-				}
-			}
-
+			a.close_file()
 			exit(0)
 		}
 		':exit unchanged', ':leave unchanged', ':quit unchanged' {
 			exit(0)
+		}
+		':format', ':reformat' {
+			a.close_file()
+			a.load_file()
+			a.command_buffer = ':'
 		}
 		':save', ':write' {
 			a.save_file()
@@ -107,34 +103,6 @@ fn (mut a Adjust) execute_command() {
 		else {
 			a.command_buffer = ':'
 		}
-	}
-}
-
-fn (mut a Adjust) go_to_next_file() {
-	if a.files_to_edit.len > 1 {
-		a.save_file()
-
-		if a.current_file == a.files_to_edit.len - 1 {
-			a.current_file = 0
-		} else {
-			a.current_file++
-		}
-
-		a.load_file()
-	}
-}
-
-fn (mut a Adjust) go_to_previous_file() {
-	if a.files_to_edit.len > 1 {
-		a.save_file()
-
-		if a.current_file == 0 {
-			a.current_file = a.files_to_edit.len - 1
-		} else {
-			a.current_file--
-		}
-
-		a.load_file()
 	}
 }
 
@@ -148,29 +116,6 @@ fn (mut a Adjust) insert_text(s string) {
 		a.text_cursor.x++
 		a.viewport_cursor.x++
 	}
-}
-
-fn (mut a Adjust) load_file() {
-	a.data.clear()
-	a.determine_language_colours()
-
-	if content := os.read_lines(a.files_to_edit[a.current_file]) {
-		a.data << content
-	}
-
-	if a.data.len == 0 {
-		a.data << ''
-	}
-
-	for i, line in a.data {
-		a.data[i] = line.replace('\t', ' '.repeat(8))
-	}
-
-	a.line_number_filling = int(math.log10(a.data.len + 1))
-	a.text_cursor.x = 0
-	a.text_cursor.y = 1
-	a.viewport_cursor.x = a.line_number_filling + 6
-	a.viewport_cursor.y = 1
 }
 
 fn (mut a Adjust) remove_text(r RemoveKey) {
@@ -188,12 +133,6 @@ fn (mut a Adjust) remove_text(r RemoveKey) {
 		}
 		.delete {}
 	}
-}
-
-fn (a Adjust) save_file() {
-	file := a.files_to_edit[a.current_file]
-	content := a.data.join('\n') + '\n'
-	os.write_file(file, content) or { panic(err) }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
