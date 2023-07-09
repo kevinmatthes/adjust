@@ -146,7 +146,18 @@ fn (mut a Adjust) remove_text(r RemoveKey) {
 				}
 			}
 		}
-		.delete {}
+		.delete {
+			end_of_line := a.text_cursor.x == a.data[line].len
+			not_last_line := a.text_cursor.y < a.data.len
+
+			if a.text_cursor.x < a.data[line].len {
+				runes.delete(a.text_cursor.x)
+				a.data[line] = runes.string()
+			} else if end_of_line && not_last_line {
+				a.data[line] += a.data[line + 1]
+				a.data.delete(line + 1)
+			}
+		}
 	}
 }
 
