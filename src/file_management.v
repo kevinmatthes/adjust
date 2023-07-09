@@ -83,7 +83,7 @@ fn (mut a Adjust) load_file() {
 	}
 
 	for i, line in a.data {
-		a.data[i] = line.replace('\t', ' '.repeat(8))
+		a.data[i] = line.normalize_tabs(8)
 	}
 
 	a.line_number_filling = int(math.log10(a.data.len + 1))
