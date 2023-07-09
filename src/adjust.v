@@ -149,4 +149,8 @@ fn (mut a Adjust) update_line_number_filling() {
 	a.line_number_filling = int(math.log10(a.data.len + 1))
 }
 
+fn (mut a Adjust) update_viewport_cursor() {
+	a.viewport_cursor.x = a.line_number_filling + 6
+}
+
 ////////////////////////////////////////////////////////////////////////////////

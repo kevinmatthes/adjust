@@ -71,7 +71,7 @@ fn (mut a Adjust) move_cursor_right() {
 fn (mut a Adjust) move_cursor_start() {
 	if a.text_cursor.x != 0 {
 		a.text_cursor.x = 0
-		a.viewport_cursor.x = a.line_number_filling + 6
+		a.update_viewport_cursor()
 	}
 }
 

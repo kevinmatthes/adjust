@@ -61,6 +61,7 @@ fn event_loop(event &terminal.Event, mut adjust Adjust) {
 						adjust.split_line()
 						adjust.move_cursor_start()
 						adjust.move_cursor_down()
+						adjust.update_viewport_cursor()
 					}
 					.escape {
 						adjust.mode = .view
