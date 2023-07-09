@@ -140,6 +140,10 @@ fn (mut a Adjust) remove_text(r RemoveKey) {
 				a.text_cursor.y--
 				a.viewport_cursor.x = a.line_number_filling + 6 + previous.len
 				a.viewport_cursor.y--
+
+				if a.text_cursor.x > a.window.window_width {
+					a.move_cursor_end()
+				}
 			}
 		}
 		.delete {}
