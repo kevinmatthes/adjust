@@ -140,9 +140,24 @@ fn (mut a Adjust) remove_text(r RemoveKey) {
 				a.text_cursor.y--
 				a.viewport_cursor.x = a.line_number_filling + 6 + previous.len
 				a.viewport_cursor.y--
+
+				if a.viewport_cursor.x > a.window.window_width {
+					a.move_cursor_end()
+				}
 			}
 		}
-		.delete {}
+		.delete {
+			end_of_line := a.text_cursor.x == a.data[line].len
+			not_last_line := a.text_cursor.y < a.data.len
+
+			if a.text_cursor.x < a.data[line].len {
+				runes.delete(a.text_cursor.x)
+				a.data[line] = runes.string()
+			} else if end_of_line && not_last_line {
+				a.data[line] += a.data[line + 1]
+				a.data.delete(line + 1)
+			}
+		}
 	}
 }
 
