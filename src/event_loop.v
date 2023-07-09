@@ -51,6 +51,9 @@ fn event_loop(event &terminal.Event, mut adjust Adjust) {
 					.backspace {
 						adjust.remove_text(.backspace)
 					}
+					.delete {
+						adjust.remove_text(.delete)
+					}
 					.down {
 						adjust.move_cursor_down()
 					}
