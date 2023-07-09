@@ -85,16 +85,16 @@ fn (mut a Adjust) load_file() {
 		a.data[i] = line.normalize_tabs(8)
 	}
 
+	a.update_line_number_filling()
 	a.text_cursor.x = 0
 	a.text_cursor.y = 1
-	a.viewport_cursor.x = a.line_number_filling + 6
+	a.update_viewport_cursor()
 	a.viewport_cursor.y = 1
-	a.update_line_number_filling()
 }
 
 fn (a Adjust) save_file() {
 	file := a.files_to_edit[a.current_file]
-	content := a.data.join('\n') + '\n'
+	content := a.data.join_lines() + '\n'
 	os.write_file(file, content) or { panic(err) }
 }
 
