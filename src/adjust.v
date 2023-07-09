@@ -19,6 +19,7 @@
 
 module main
 
+import math
 import os
 import term
 import term.ui as terminal
@@ -141,6 +142,11 @@ fn (mut a Adjust) split_line() {
 
 	a.data[line] = a.data[line].limit(a.text_cursor.x)
 	a.data.insert(a.text_cursor.y, new)
+	a.update_line_number_filling()
+}
+
+fn (mut a Adjust) update_line_number_filling() {
+	a.line_number_filling = int(math.log10(a.data.len + 1))
 }
 
 ////////////////////////////////////////////////////////////////////////////////
