@@ -125,11 +125,21 @@ fn (mut a Adjust) remove_text(r RemoveKey) {
 
 	match r {
 		.backspace {
-			if runes.len > 0 && a.text_cursor.x > 0 {
+			if a.text_cursor.x > 0 {
 				runes.delete(a.text_cursor.x - 1)
 				a.data[line] = runes.string()
 				a.text_cursor.x--
 				a.viewport_cursor.x--
+			} else if a.text_cursor.x == 0 && line > 0 {
+				previous := a.data[line - 1]
+				this := a.data[line]
+
+				a.data[line - 1] = previous + this
+				a.data.delete(line)
+				a.text_cursor.x = previous.len
+				a.text_cursor.y--
+				a.viewport_cursor.x = a.line_number_filling + 6 + previous.len
+				a.viewport_cursor.y--
 			}
 		}
 		.delete {}
