@@ -20,7 +20,6 @@
 module main
 
 import os
-import math
 
 fn (mut a Adjust) close_file() {
 	file := a.files_to_edit[a.current_file]
@@ -83,14 +82,14 @@ fn (mut a Adjust) load_file() {
 	}
 
 	for i, line in a.data {
-		a.data[i] = line.replace('\t', ' '.repeat(8))
+		a.data[i] = line.normalize_tabs(8)
 	}
 
-	a.line_number_filling = int(math.log10(a.data.len + 1))
 	a.text_cursor.x = 0
 	a.text_cursor.y = 1
 	a.viewport_cursor.x = a.line_number_filling + 6
 	a.viewport_cursor.y = 1
+	a.update_line_number_filling()
 }
 
 fn (a Adjust) save_file() {
