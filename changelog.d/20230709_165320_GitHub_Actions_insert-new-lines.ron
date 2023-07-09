@@ -1,0 +1,8 @@
+(
+  references: {},
+  changes: {
+    "Added": [
+      "allow for line breaks",
+    ],
+  },
+)
