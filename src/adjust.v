@@ -135,4 +135,12 @@ fn (mut a Adjust) remove_text(r RemoveKey) {
 	}
 }
 
+fn (mut a Adjust) split_line() {
+	line := a.text_cursor.y - 1
+	new := a.data[line].runes()[a.text_cursor.x..].string()
+
+	a.data[line] = a.data[line].limit(a.text_cursor.x)
+	a.data.insert(a.text_cursor.y, new)
+}
+
 ////////////////////////////////////////////////////////////////////////////////
