@@ -19,7 +19,7 @@
 
 module main
 
-import os
+import os { execute }
 
 fn (mut a Adjust) close_file() {
 	file := a.files_to_edit[a.current_file]
@@ -28,13 +28,13 @@ fn (mut a Adjust) close_file() {
 
 	match a.l.bg {
 		linguist_nim {
-			os.execute('nimpretty ${file}')
+			execute('nimpretty ${file}')
 		}
 		linguist_rust {
-			os.execute('rustfmt ${file}')
+			execute('rustfmt ${file}')
 		}
 		linguist_v {
-			os.execute('v fmt -w ${file}')
+			execute('v fmt -w ${file}')
 		}
 		else {}
 	}
