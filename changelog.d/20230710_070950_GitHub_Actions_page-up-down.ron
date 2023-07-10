@@ -1,0 +1,10 @@
+(
+  references: {},
+  changes: {
+    "Added": [
+      "enable moving by page up / page down",
+      "src/languages.v",
+      "colour for Git configuration files",
+    ],
+  },
+)

@@ -19,83 +19,70 @@
 
 module main
 
+import term.ui as terminal
 import os
 
-fn (mut a Adjust) close_file() {
-	file := a.files_to_edit[a.current_file]
+struct Language {
+mut:
+	bg  terminal.Color = konsole_green
+	fg  terminal.Color = white
+	tab int = 4
+}
 
-	a.save_file()
-
-	match a.l.bg {
-		linguist_nim {
-			os.execute('nimpretty ${file}')
-		}
-		linguist_rust {
-			os.execute('rustfmt ${file}')
+fn (mut l Language) calculate() {
+	l.tab = match l.bg {
+		linguist_nim, linguist_yaml {
+			2
 		}
 		linguist_v {
-			os.execute('v fmt -w ${file}')
+			8
 		}
-		else {}
-	}
-}
-
-fn (mut a Adjust) go_to_next_file() {
-	if a.files_to_edit.len > 1 {
-		a.close_file()
-
-		if a.current_file == a.files_to_edit.len - 1 {
-			a.current_file = 0
-		} else {
-			a.current_file++
+		else {
+			4
 		}
-
-		a.load_file()
 	}
 }
 
-fn (mut a Adjust) go_to_previous_file() {
-	if a.files_to_edit.len > 1 {
-		a.close_file()
-
-		if a.current_file == 0 {
-			a.current_file = a.files_to_edit.len - 1
-		} else {
-			a.current_file--
+fn (mut l Language) deduce(f string) {
+	l.bg, l.fg = match os.file_ext(f) {
+		'.cff', '.yaml', '.yml' {
+			linguist_yaml, white
 		}
-
-		a.load_file()
+		'.json5' {
+			linguist_json5, white
+		}
+		'.markdown', '.md', '.mdown', '.mdwn', '.mkd', '.mkdn', '.mkdown' {
+			linguist_markdown, white
+		}
+		'.nim', '.nimble', '.nimrod', '.nims' {
+			linguist_nim, white
+		}
+		'.rs' {
+			linguist_rust, black
+		}
+		'.tex' {
+			linguist_tex, white
+		}
+		'.v', '.vsh', '.vv' {
+			linguist_v, black
+		}
+		else {
+			match f {
+				'.gitattributes', '.gitconfig', '.gitignore' {
+					linguist_git, white
+				}
+				'nim.cfg' {
+					linguist_nim, white
+				}
+				'v.mod' {
+					linguist_v, black
+				}
+				else {
+					konsole_green, white
+				}
+			}
+		}
 	}
-}
-
-fn (mut a Adjust) load_file() {
-	a.data.clear()
-	a.init_language()
-	a.first_line = 0
-
-	if content := os.read_lines(a.files_to_edit[a.current_file]) {
-		a.data << content
-	}
-
-	if a.data.len == 0 {
-		a.data << ''
-	}
-
-	for i, line in a.data {
-		a.data[i] = line.normalize_tabs(a.l.tab)
-	}
-
-	a.update_line_number_filling()
-	a.text_cursor.x = 0
-	a.text_cursor.y = 1
-	a.update_viewport_cursor()
-	a.viewport_cursor.y = 1
-}
-
-fn (a Adjust) save_file() {
-	file := a.files_to_edit[a.current_file]
-	content := a.data.join_lines() + '\n'
-	os.write_file(file, content) or { panic(err) }
 }
 
 ////////////////////////////////////////////////////////////////////////////////

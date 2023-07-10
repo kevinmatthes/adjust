@@ -20,65 +20,22 @@
 module main
 
 import math
-import os
 import term
 import term.ui as terminal
 
 struct Adjust {
 mut:
-	background          terminal.Color = konsole_green
 	command_buffer      string
 	current_file        int
 	data                []string
 	files_to_edit       []string
 	first_line          int
-	foreground          terminal.Color = white
+	l                   Language
 	line_number_filling int
 	mode                Mode = .view
 	text_cursor         term.Coord
 	viewport_cursor     term.Coord
 	window              &terminal.Context = unsafe { nil }
-}
-
-fn (mut a Adjust) determine_language_colours() {
-	file := a.files_to_edit[a.current_file]
-
-	a.background, a.foreground = match os.file_ext(file) {
-		'.cff', '.yaml', '.yml' {
-			linguist_yaml, white
-		}
-		'.json5' {
-			linguist_json5, white
-		}
-		'.markdown', '.md', '.mdown', '.mdwn', '.mkd', '.mkdn', '.mkdown' {
-			linguist_markdown, white
-		}
-		'.nim', '.nimble', '.nimrod', '.nims' {
-			linguist_nim, white
-		}
-		'.rs' {
-			linguist_rust, black
-		}
-		'.tex' {
-			linguist_tex, white
-		}
-		'.v', '.vsh', '.vv' {
-			linguist_v, black
-		}
-		else {
-			match file {
-				'nim.cfg' {
-					linguist_nim, white
-				}
-				'v.mod' {
-					linguist_v, black
-				}
-				else {
-					konsole_green, white
-				}
-			}
-		}
-	}
 }
 
 fn (mut a Adjust) execute_command() {
@@ -111,6 +68,11 @@ fn (mut a Adjust) execute_command() {
 			a.command_buffer = ':'
 		}
 	}
+}
+
+fn (mut a Adjust) init_language() {
+	a.l.deduce(a.files_to_edit[a.current_file])
+	a.l.calculate()
 }
 
 fn (mut a Adjust) insert_text(s string) {

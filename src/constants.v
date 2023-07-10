@@ -24,6 +24,7 @@ import term.ui as terminal
 const (
 	black             = terminal.Color{0x00, 0x00, 0x00}
 	konsole_green     = terminal.Color{0x11, 0xD1, 0x16}
+	linguist_git      = terminal.Color{0xF4, 0x4D, 0x27}
 	linguist_json5    = terminal.Color{0x26, 0x7C, 0xB9}
 	linguist_markdown = terminal.Color{0x08, 0x3F, 0xA1}
 	linguist_nim      = terminal.Color{0xFF, 0xC2, 0x00}

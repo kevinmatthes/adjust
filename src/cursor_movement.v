@@ -58,6 +58,43 @@ fn (mut a Adjust) move_cursor_left() {
 	}
 }
 
+fn (mut a Adjust) move_cursor_page_down() {
+	if a.text_cursor.y < a.data.len {
+		page := a.window.window_height - 2
+
+		a.move_cursor_start()
+
+		if a.first_line + page < a.data.len && a.text_cursor.y + page < a.data.len + 1 {
+			a.first_line += page
+			a.text_cursor.y += page
+		} else {
+			a.first_line = a.data.len - 1
+			a.text_cursor.y = a.data.len
+			a.viewport_cursor.y = 1
+		}
+	}
+}
+
+fn (mut a Adjust) move_cursor_page_up() {
+	if a.text_cursor.y > 1 {
+		page := a.window.window_height - 2
+
+		a.move_cursor_start()
+
+		if a.first_line > page && a.text_cursor.y - page > 1 {
+			a.first_line -= page
+			a.text_cursor.y -= page
+		} else if a.text_cursor.y - page > 1 {
+			a.first_line = 0
+			a.text_cursor.y = a.viewport_cursor.y
+		} else {
+			a.first_line = 0
+			a.text_cursor.y = 1
+			a.viewport_cursor.y = 1
+		}
+	}
+}
+
 fn (mut a Adjust) move_cursor_right() {
 	end_of_line := a.data[a.text_cursor.y - 1].len
 	end_of_window := a.window.window_width
