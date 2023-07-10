@@ -45,6 +45,9 @@
 \usepackage{lmodern}
 \usepackage{url}
 
+\usepackage{enumitem}
+\setlist{nosep}
+
 \usepackage[english]{varioref}
 \usepackage[bookmarks, bookmarksnumbered, bookmarksopen, hidelinks]{hyperref}
 \usepackage[english]{cleveref}
@@ -52,10 +55,10 @@
 \usepackage{listings}
 \lstset{
     backgroundcolor = \color{lightgray},
-    basicstyle = \ttfamily,
-    keywordstyle = \color{heavygreen},
-    numbers = left,
-    numberstyle = \tiny
+    basicstyle      = \ttfamily,
+    keywordstyle    = \color{heavygreen},
+    numbers         = left,
+    numberstyle     = \tiny
 }
 
 \DeclareRobustCommand{\adjust}{\textsf{adjust}}
@@ -69,14 +72,54 @@
 \maketitle
 \tableofcontents
 
-\section{Installation}
-\label{sec:installation}
+\section{Installing and Updating the Editor}
+\label{sec:installing-and-updating}
 It is recommended to install \adjust\ from source using the V CLI with the
 following command.
 
-\begin{lstlisting}[language = bash]
+\begin{lstlisting}[caption = Installing \adjust\ from source, language = bash]
 v install --git https://github.com/kevinmatthes/adjust
 \end{lstlisting}
+
+Once installed, \adjust\ can be updated using either the above command or
+its built-in self-update mechanism which is technically just a wrapper around
+the above instruction to the V CLI.
+
+\begin{lstlisting}[caption = Updating \adjust, language = bash]
+adjust --nightly
+\end{lstlisting}
+
+\section{Working with the Editor}
+\label{sec:working}
+\subsection{Starting the Editor}
+\label{sec:working:starting}
+As soon as the editor is installed, users can begin to edit their files with
+\adjust.  To do so, the editor must be called with the paths to the files to
+edit during the session.  Files which do not exist, yet, are going to be created
+on save.
+
+\begin{lstlisting}[caption = Starting \adjust, language = bash]
+adjust a.v b.c c.nim d.v
+\end{lstlisting}
+
+\subsection{Leaving the Editor}
+\label{sec:working:leaving}
+To leave the current session, users will need to change to the command mode and
+execute one of the following commands.
+
+\begin{itemize}
+\item \texttt{:exit}
+\item \texttt{:exit unchanged}
+\item \texttt{:leave}
+\item \texttt{:leave unchanged}
+\item \texttt{:quit}
+\item \texttt{:quit unchanged}
+\end{itemize}
+
+All commands are synonymous regarding their final effect:  quitting the current
+editing session.  Those commands ending in \texttt{unchanged} will cause the
+\adjust\ to discard all changes while those \emph{not} ending in \texttt
+{unchanged} will automatically save all changes before leaving.
 \end{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
