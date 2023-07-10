@@ -1,0 +1,11 @@
+(
+  references: {},
+  changes: {
+    "Added": [
+      "adjust.tex",
+      "ignore LaTeX compilation artifacts",
+      "enable tab insertions",
+      "colours for JSON5 and TeX / LaTeX",
+    ],
+  },
+)
