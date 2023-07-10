@@ -39,14 +39,14 @@ fn main() {
 			}
 
 			adjust.load_file()
-			adjust.window = terminal.init(
+			adjust.v.win = terminal.init(
 				capture_events: true
 				event_fn: event_loop
 				frame_fn: render
 				user_data: adjust
 			)
 
-			adjust.window.run()!
+			adjust.v.win.run()!
 		}
 	} else {
 		println(help_message)
