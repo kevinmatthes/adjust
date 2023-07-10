@@ -21,7 +21,7 @@ module main
 
 import math { log10 }
 import term { Coord }
-import term.ui as terminal { Context }
+import term.ui { Context }
 
 struct Viewport {
 mut:
