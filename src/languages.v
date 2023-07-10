@@ -69,7 +69,7 @@ fn (mut l Language) deduce(f string) {
 		else {
 			match f {
 				'.gitattributes', '.gitconfig', '.gitignore' {
-					linguist_gitconfig, white
+					linguist_git, white
 				}
 				'nim.cfg' {
 					linguist_nim, white
