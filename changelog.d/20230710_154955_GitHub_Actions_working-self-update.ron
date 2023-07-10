@@ -1,0 +1,9 @@
+(
+  references: {},
+  changes: {
+    "Added": [
+      "use ``flag`` module of V stdlib",
+      "colours for Perl, Bash / Shell, and Just",
+    ],
+  },
+)
