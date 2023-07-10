@@ -47,6 +47,9 @@ fn (mut a Adjust) determine_language_colours() {
 		'.cff', '.yaml', '.yml' {
 			linguist_yaml, white
 		}
+		'.json5' {
+			linguist_json5, white
+		}
 		'.markdown', '.md', '.mdown', '.mdwn', '.mkd', '.mkdn', '.mkdown' {
 			linguist_markdown, white
 		}
@@ -55,6 +58,9 @@ fn (mut a Adjust) determine_language_colours() {
 		}
 		'.rs' {
 			linguist_rust, black
+		}
+		'.tex' {
+			linguist_tex, white
 		}
 		'.v', '.vsh', '.vv' {
 			linguist_v, black
@@ -111,11 +117,16 @@ fn (mut a Adjust) insert_text(s string) {
 	if a.viewport_cursor.x < a.window.window_width {
 		index := a.text_cursor.y - 1
 		mut line := a.data[index].runes()
+		runes := s.runes()
 
-		line.insert(a.text_cursor.x, s.runes())
+		line.insert(a.text_cursor.x, runes)
 		a.data[index] = line.string()
-		a.text_cursor.x++
-		a.viewport_cursor.x++
+		a.text_cursor.x += runes.len
+		a.viewport_cursor.x += runes.len
+
+		if a.viewport_cursor.x > a.window.window_width {
+			a.move_cursor_end()
+		}
 	}
 }
 
