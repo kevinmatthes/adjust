@@ -75,11 +75,17 @@ fn event_loop(event &terminal.Event, mut adjust Adjust) {
 					.left {
 						adjust.move_cursor_left()
 					}
+					.page_down {
+						adjust.move_cursor_page_down()
+					}
+					.page_up {
+						adjust.move_cursor_page_up()
+					}
 					.right {
 						adjust.move_cursor_right()
 					}
 					.tab {
-						adjust.insert_text(' '.repeat(8))
+						adjust.insert_text(' '.repeat(adjust.l.tab))
 					}
 					.up {
 						adjust.move_cursor_up()
@@ -115,6 +121,12 @@ fn event_loop(event &terminal.Event, mut adjust Adjust) {
 					}
 					.less_than {
 						adjust.go_to_previous_file()
+					}
+					.page_down {
+						adjust.move_cursor_page_down()
+					}
+					.page_up {
+						adjust.move_cursor_page_up()
 					}
 					.right {
 						adjust.move_cursor_right()
