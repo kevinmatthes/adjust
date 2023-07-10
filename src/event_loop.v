@@ -78,6 +78,9 @@ fn event_loop(event &terminal.Event, mut adjust Adjust) {
 					.right {
 						adjust.move_cursor_right()
 					}
+					.tab {
+						adjust.insert_text(' '.repeat(8))
+					}
 					.up {
 						adjust.move_cursor_up()
 					}
