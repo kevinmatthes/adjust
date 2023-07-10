@@ -20,14 +20,14 @@
 module main
 
 import os
-import os.cmdline as cmd
-import term.ui as terminal
+import os.cmdline { only_non_options, only_options }
+import term.ui { init }
 
 fn main() {
 	if os.args.len > 1 {
 		args := os.args[1..]
-		options := cmd.only_options(args)
-		files := cmd.only_non_options(args)
+		options := only_options(args)
+		files := only_non_options(args)
 
 		if options.any(it == '--nightly') {
 			os.execute('v install --git https://github.com/kevinmatthes/adjust')
@@ -39,7 +39,7 @@ fn main() {
 			}
 
 			adjust.load_file()
-			adjust.v.win = terminal.init(
+			adjust.v.win = init(
 				capture_events: true
 				event_fn: event_loop
 				frame_fn: render
