@@ -20,6 +20,15 @@
 module main
 
 import term.ui { Color }
+import v.vmod { from_file }
+
+const (
+	cli_desc = v_mod.description
+	cli_name = v_mod.name
+	cli_vrsn = v_mod.version
+	install  = 'v install --git https://github.com/kevinmatthes/adjust'
+	v_mod    = from_file('v.mod') or { panic(err) }
+)
 
 const (
 	black                = Color{0x00, 0x00, 0x00}
@@ -30,22 +39,16 @@ const (
 	linguist_c_plus_plus = Color{0xF3, 0x4B, 0x7D}
 	linguist_git         = Color{0xF4, 0x4D, 0x27}
 	linguist_json5       = Color{0x26, 0x7C, 0xB9}
+	linguist_just        = Color{0x38, 0x4D, 0x54}
 	linguist_markdown    = Color{0x08, 0x3F, 0xA1}
 	linguist_nim         = Color{0xFF, 0xC2, 0x00}
+	linguist_perl        = Color{0x02, 0x98, 0xC3}
 	linguist_rust        = Color{0xDE, 0xA5, 0x84}
+	linguist_shell       = Color{0x89, 0xE0, 0x51}
 	linguist_tex         = Color{0x3D, 0x61, 0x17}
 	linguist_v           = Color{0x4F, 0x87, 0xC4}
 	linguist_yaml        = Color{0xCB, 0x17, 0x1E}
 	white                = Color{0xFF, 0xFF, 0xFF}
 )
-
-const help_message = 'Yet another text editor for the terminal, written in V.
-
-Usage:
-  adjust <FILE_TO_EDIT> [<FILE_TO_EDIT> [<FILE_TO_EDIT> ...]]
-
-Options:
-  -h, --help        Show this help message and exit.
-      --nightly     v install --git https://github.com/kevinmatthes/adjust'
 
 ////////////////////////////////////////////////////////////////////////////////

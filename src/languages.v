@@ -45,18 +45,21 @@ fn (mut l Language) calculate() {
 
 fn (mut l Language) deduce(f string) {
 	l.bg, l.fg = match file_ext(f) {
+		'.C', '.CPP', '.H', '.HPP', '.c++', '.cc', '.cp', '.cpp', '.cxx', '.h++', '.hh', '.hp',
+		'.hpp', '.hxx', '.ii', '.tcc' {
+			linguist_c_plus_plus, black
+		}
 		'.asy' {
 			linguist_asymptote, white
+		}
+		'.bash', '.sh' {
+			linguist_shell, black
 		}
 		'.bib' {
 			linguist_bibtex, black
 		}
 		'.c', '.h', '.i' {
 			linguist_c, white
-		}
-		'.C', '.CPP', '.H', '.HPP', '.c++', '.cc', '.cp', '.cpp', '.cxx', '.h++', '.hh', '.hp',
-		'.hpp', '.hxx', '.ii', '.tcc' {
-			linguist_c_plus_plus, black
 		}
 		'.cff', '.yaml', '.yml' {
 			linguist_yaml, white
@@ -69,6 +72,9 @@ fn (mut l Language) deduce(f string) {
 		}
 		'.nim', '.nimble', '.nimrod', '.nims' {
 			linguist_nim, white
+		}
+		'.pl' {
+			linguist_perl, white
 		}
 		'.rs' {
 			linguist_rust, black
@@ -83,6 +89,12 @@ fn (mut l Language) deduce(f string) {
 			match f {
 				'.gitattributes', '.gitconfig', '.gitignore' {
 					linguist_git, white
+				}
+				'.justfile', 'justfile' {
+					linguist_just, white
+				}
+				'.latexmkrc', 'LatexMk', 'latexmkrc' {
+					linguist_perl, white
 				}
 				'nim.cfg' {
 					linguist_nim, white
