@@ -19,7 +19,7 @@
 
 module main
 
-import math
+import math { log10 }
 
 fn render(mut adjust Adjust) {
 	adjust.v.win.clear()
@@ -40,7 +40,7 @@ fn (mut a Adjust) render_cursor() {
 
 fn (mut a Adjust) render_line(i int) bool {
 	return if i - 1 < a.data.len {
-		times := a.v.lnf - int(math.log10(i + 1))
+		times := a.v.lnf - int(log10(i + 1))
 		number := '${' '.repeat(times)}${i}'
 		line := ' ${number} │ ${a.data[i - 1]}'.limit(a.v.win.window_width)
 
