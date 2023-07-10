@@ -29,7 +29,9 @@ fn main() {
 		options := cmd.only_options(args)
 		files := cmd.only_non_options(args)
 
-		if options.any(it in ['-h', '--help']) || files.len == 0 {
+		if options.any(it == '--nightly') {
+			os.execute('v install --git https://github.com/kevinmatthes/adjust')
+		} else if options.any(it in ['-h', '--help']) || files.len == 0 {
 			println(help_message)
 		} else {
 			mut adjust := &Adjust{
