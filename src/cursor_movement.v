@@ -78,13 +78,14 @@ fn (mut a Adjust) move_cursor_page_down() {
 fn (mut a Adjust) move_cursor_page_up() {
 	if a.text_cursor.y > 1 {
 		page := a.window.window_height - 2
+		cursor_in_range := a.text_cursor.y - page > 1
 
 		a.move_cursor_start()
 
-		if a.first_line > page && a.text_cursor.y - page > 1 {
+		if a.first_line > page && cursor_in_range {
 			a.first_line -= page
 			a.text_cursor.y -= page
-		} else if a.text_cursor.y - page > 1 {
+		} else if cursor_in_range {
 			a.first_line = 0
 			a.text_cursor.y = a.viewport_cursor.y
 		} else {
