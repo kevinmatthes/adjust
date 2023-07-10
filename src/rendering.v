@@ -74,8 +74,8 @@ fn (mut a Adjust) render_status_bar_file_name(x int, y int) int {
 	file := a.files_to_edit[a.current_file]
 	position := ' ${a.text_cursor.x} : ${a.text_cursor.y} @ ${file} '
 
-	a.window.set_bg_color(a.background)
-	a.window.set_color(a.foreground)
+	a.window.set_bg_color(a.l.bg)
+	a.window.set_color(a.l.fg)
 	a.window.draw_text(x, y, position)
 	a.window.reset()
 
@@ -83,7 +83,7 @@ fn (mut a Adjust) render_status_bar_file_name(x int, y int) int {
 }
 
 fn (mut a Adjust) render_status_bar_filling(x int, y int) {
-	a.window.set_bg_color(a.background)
+	a.window.set_bg_color(a.l.bg)
 	a.window.draw_line(x, y, a.window.window_width, y)
 	a.window.reset()
 }
