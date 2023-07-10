@@ -39,4 +39,11 @@ fn (mut v Viewport) refill(n int) {
 	v.lnf = int(log10(n))
 }
 
+fn (mut v Viewport) reset(n int) {
+	a.v.fst = 0
+	a.v.refill(n)
+	a.v.align()
+	a.v.pos.y = 1
+}
+
 ////////////////////////////////////////////////////////////////////////////////
