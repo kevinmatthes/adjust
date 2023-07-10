@@ -19,7 +19,7 @@
 
 module main
 
-import math
+import math { min }
 
 fn (mut a Adjust) move_cursor_down() {
 	if a.text_cursor.y < a.data.len {
@@ -42,7 +42,7 @@ fn (mut a Adjust) move_cursor_end() {
 	end_of_window := a.v.win.window_width
 	offset := a.v.lnf + 6
 
-	if math.min(end_of_line, end_of_window) == end_of_line {
+	if min(end_of_line, end_of_window) == end_of_line {
 		a.text_cursor.x = end_of_line
 		a.v.pos.x = end_of_line + offset
 	} else {
