@@ -26,7 +26,7 @@ fn (mut a Adjust) close_file() {
 
 	a.save_file()
 
-	match a.background {
+	match a.l.bg {
 		linguist_nim {
 			os.execute('nimpretty ${file}')
 		}
@@ -70,7 +70,7 @@ fn (mut a Adjust) go_to_previous_file() {
 
 fn (mut a Adjust) load_file() {
 	a.data.clear()
-	a.determine_language_colours()
+	a.init_language()
 	a.first_line = 0
 
 	if content := os.read_lines(a.files_to_edit[a.current_file]) {
@@ -82,7 +82,7 @@ fn (mut a Adjust) load_file() {
 	}
 
 	for i, line in a.data {
-		a.data[i] = line.normalize_tabs(8)
+		a.data[i] = line.normalize_tabs(a.l.tab)
 	}
 
 	a.update_line_number_filling()
