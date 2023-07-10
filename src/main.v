@@ -19,20 +19,28 @@
 
 module main
 
+import flag { new_flag_parser }
 import os
-import os.cmdline { only_non_options, only_options }
 import term.ui { init }
 
 fn main() {
-	if os.args.len > 1 {
-		args := os.args[1..]
-		options := only_options(args)
-		files := only_non_options(args)
+	mut cli := new_flag_parser(os.args)
+	cli.application(cli_name)
+	cli.arguments_description('<file> [file ...]')
+	cli.description(cli_desc)
+	cli.version(cli_vrsn)
+	cli.skip_executable()
 
-		if options.any(it == '--nightly') {
-			os.execute('v install --git https://github.com/kevinmatthes/adjust')
-		} else if options.any(it in ['-h', '--help']) || files.len == 0 {
-			println(help_message)
+	nightly := cli.bool('nightly', 0, false, install)
+
+	if nightly {
+		os.execute(install)
+		os.execute('v ~/.vmodules/adjust/')
+	} else {
+		files := cli.finalize()!
+
+		if files.len == 0 {
+			println(cli.usage())
 		} else {
 			mut adjust := &Adjust{
 				files_to_edit: files
@@ -48,8 +56,6 @@ fn main() {
 
 			adjust.v.win.run()!
 		}
-	} else {
-		println(help_message)
 	}
 }
 
