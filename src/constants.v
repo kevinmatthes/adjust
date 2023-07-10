@@ -22,17 +22,21 @@ module main
 import term.ui as terminal
 
 const (
-	black             = terminal.Color{0x00, 0x00, 0x00}
-	konsole_green     = terminal.Color{0x11, 0xD1, 0x16}
-	linguist_git      = terminal.Color{0xF4, 0x4D, 0x27}
-	linguist_json5    = terminal.Color{0x26, 0x7C, 0xB9}
-	linguist_markdown = terminal.Color{0x08, 0x3F, 0xA1}
-	linguist_nim      = terminal.Color{0xFF, 0xC2, 0x00}
-	linguist_rust     = terminal.Color{0xDE, 0xA5, 0x84}
-	linguist_tex      = terminal.Color{0x3D, 0x61, 0x17}
-	linguist_v        = terminal.Color{0x4F, 0x87, 0xC4}
-	linguist_yaml     = terminal.Color{0xCB, 0x17, 0x1E}
-	white             = terminal.Color{0xFF, 0xFF, 0xFF}
+	black                = terminal.Color{0x00, 0x00, 0x00}
+	konsole_green        = terminal.Color{0x11, 0xD1, 0x16}
+	linguist_asymptote   = terminal.Color{0xFF, 0x00, 0x00}
+	linguist_bibtex      = terminal.Color{0x77, 0x88, 0x99}
+	linguist_c           = terminal.Color{0x55, 0x55, 0x55}
+	linguist_c_plus_plus = terminal.Color{0xF3, 0x4B, 0x7D}
+	linguist_git         = terminal.Color{0xF4, 0x4D, 0x27}
+	linguist_json5       = terminal.Color{0x26, 0x7C, 0xB9}
+	linguist_markdown    = terminal.Color{0x08, 0x3F, 0xA1}
+	linguist_nim         = terminal.Color{0xFF, 0xC2, 0x00}
+	linguist_rust        = terminal.Color{0xDE, 0xA5, 0x84}
+	linguist_tex         = terminal.Color{0x3D, 0x61, 0x17}
+	linguist_v           = terminal.Color{0x4F, 0x87, 0xC4}
+	linguist_yaml        = terminal.Color{0xCB, 0x17, 0x1E}
+	white                = terminal.Color{0xFF, 0xFF, 0xFF}
 )
 
 const help_message = 'Yet another text editor for the terminal, written in V.
@@ -41,6 +45,7 @@ Usage:
   adjust <FILE_TO_EDIT> [<FILE_TO_EDIT> [<FILE_TO_EDIT> ...]]
 
 Options:
-  -h, --help   Show this help message and exit.'
+  -h, --help        Show this help message and exit.
+      --nightly     v install --git https://github.com/kevinmatthes/adjust'
 
 ////////////////////////////////////////////////////////////////////////////////
