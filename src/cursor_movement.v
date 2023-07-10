@@ -84,6 +84,9 @@ fn (mut a Adjust) move_cursor_page_up() {
 		if a.first_line > page && a.text_cursor.y - page > 1 {
 			a.first_line -= page
 			a.text_cursor.y -= page
+		} else if a.text_cursor.y - page > 1 {
+			a.first_line = 0
+			a.text_cursor.y = a.viewport_cursor.y
 		} else {
 			a.first_line = 0
 			a.text_cursor.y = 1
