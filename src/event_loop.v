@@ -19,9 +19,9 @@
 
 module main
 
-import term.ui as terminal
+import term.ui { Event }
 
-fn event_loop(event &terminal.Event, mut adjust Adjust) {
+fn event_loop(event &Event, mut adjust Adjust) {
 	if event.typ == .key_down {
 		match adjust.mode {
 			.command {
@@ -64,7 +64,7 @@ fn event_loop(event &terminal.Event, mut adjust Adjust) {
 						adjust.split_line()
 						adjust.move_cursor_start()
 						adjust.move_cursor_down()
-						adjust.update_viewport_cursor()
+						adjust.v.align()
 					}
 					.escape {
 						adjust.mode = .view

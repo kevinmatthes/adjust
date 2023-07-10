@@ -19,23 +19,18 @@
 
 module main
 
-import math
-import term
-import term.ui as terminal
+import term { Coord }
 
 struct Adjust {
 mut:
-	command_buffer      string
-	current_file        int
-	data                []string
-	files_to_edit       []string
-	first_line          int
-	l                   Language
-	line_number_filling int
-	mode                Mode = .view
-	text_cursor         term.Coord
-	viewport_cursor     term.Coord
-	window              &terminal.Context = unsafe { nil }
+	command_buffer string
+	current_file   int
+	data           []string
+	files_to_edit  []string
+	l              Language
+	mode           Mode = .view
+	text_cursor    Coord
+	v              Viewport
 }
 
 fn (mut a Adjust) execute_command() {
@@ -76,7 +71,7 @@ fn (mut a Adjust) init_language() {
 }
 
 fn (mut a Adjust) insert_text(s string) {
-	if a.viewport_cursor.x < a.window.window_width {
+	if a.v.pos.x < a.v.win.window_width {
 		index := a.text_cursor.y - 1
 		mut line := a.data[index].runes()
 		runes := s.runes()
@@ -84,9 +79,9 @@ fn (mut a Adjust) insert_text(s string) {
 		line.insert(a.text_cursor.x, runes)
 		a.data[index] = line.string()
 		a.text_cursor.x += runes.len
-		a.viewport_cursor.x += runes.len
+		a.v.pos.x += runes.len
 
-		if a.viewport_cursor.x > a.window.window_width {
+		if a.v.pos.x > a.v.win.window_width {
 			a.move_cursor_end()
 		}
 	}
@@ -102,7 +97,7 @@ fn (mut a Adjust) remove_text(r RemoveKey) {
 				runes.delete(a.text_cursor.x - 1)
 				a.data[line] = runes.string()
 				a.text_cursor.x--
-				a.viewport_cursor.x--
+				a.v.pos.x--
 			} else if a.text_cursor.x == 0 && line > 0 {
 				previous := a.data[line - 1]
 				this := a.data[line]
@@ -111,10 +106,10 @@ fn (mut a Adjust) remove_text(r RemoveKey) {
 				a.data.delete(line)
 				a.text_cursor.x = previous.len
 				a.text_cursor.y--
-				a.viewport_cursor.x = a.line_number_filling + 6 + previous.len
-				a.viewport_cursor.y--
+				a.v.pos.x = a.v.lnf + 6 + previous.len
+				a.v.pos.y--
 
-				if a.viewport_cursor.x > a.window.window_width {
+				if a.v.pos.x > a.v.win.window_width {
 					a.move_cursor_end()
 				}
 			}
@@ -140,15 +135,7 @@ fn (mut a Adjust) split_line() {
 
 	a.data[line] = a.data[line].limit(a.text_cursor.x)
 	a.data.insert(a.text_cursor.y, new)
-	a.update_line_number_filling()
-}
-
-fn (mut a Adjust) update_line_number_filling() {
-	a.line_number_filling = int(math.log10(a.data.len + 1))
-}
-
-fn (mut a Adjust) update_viewport_cursor() {
-	a.viewport_cursor.x = a.line_number_filling + 6
+	a.v.refill(a.data.len + 1)
 }
 
 ////////////////////////////////////////////////////////////////////////////////

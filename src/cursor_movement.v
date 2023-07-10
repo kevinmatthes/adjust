@@ -19,16 +19,16 @@
 
 module main
 
-import math
+import math { min }
 
 fn (mut a Adjust) move_cursor_down() {
 	if a.text_cursor.y < a.data.len {
 		a.text_cursor.y++
 
-		if a.viewport_cursor.y == a.window.window_height - 2 {
-			a.first_line++
+		if a.v.pos.y == a.v.win.window_height - 2 {
+			a.v.fst++
 		} else {
-			a.viewport_cursor.y++
+			a.v.pos.y++
 		}
 
 		if a.text_cursor.x > a.data[a.text_cursor.y - 1].len {
@@ -39,77 +39,77 @@ fn (mut a Adjust) move_cursor_down() {
 
 fn (mut a Adjust) move_cursor_end() {
 	end_of_line := a.data[a.text_cursor.y - 1].len
-	end_of_window := a.window.window_width
-	offset := a.line_number_filling + 6
+	end_of_window := a.v.win.window_width
+	offset := a.v.lnf + 6
 
-	if math.min(end_of_line, end_of_window) == end_of_line {
+	if min(end_of_line, end_of_window) == end_of_line {
 		a.text_cursor.x = end_of_line
-		a.viewport_cursor.x = end_of_line + offset
+		a.v.pos.x = end_of_line + offset
 	} else {
 		a.text_cursor.x = end_of_window - offset
-		a.viewport_cursor.x = end_of_window
+		a.v.pos.x = end_of_window
 	}
 }
 
 fn (mut a Adjust) move_cursor_left() {
 	if a.text_cursor.x > 0 {
 		a.text_cursor.x--
-		a.viewport_cursor.x--
+		a.v.pos.x--
 	}
 }
 
 fn (mut a Adjust) move_cursor_page_down() {
 	if a.text_cursor.y < a.data.len {
-		page := a.window.window_height - 2
+		page := a.v.win.window_height - 2
 
 		a.move_cursor_start()
 
-		if a.first_line + page < a.data.len && a.text_cursor.y + page < a.data.len + 1 {
-			a.first_line += page
+		if a.v.fst + page < a.data.len && a.text_cursor.y + page < a.data.len + 1 {
+			a.v.fst += page
 			a.text_cursor.y += page
 		} else {
-			a.first_line = a.data.len - 1
+			a.v.fst = a.data.len - 1
 			a.text_cursor.y = a.data.len
-			a.viewport_cursor.y = 1
+			a.v.pos.y = 1
 		}
 	}
 }
 
 fn (mut a Adjust) move_cursor_page_up() {
 	if a.text_cursor.y > 1 {
-		page := a.window.window_height - 2
+		page := a.v.win.window_height - 2
 		cursor_in_range := a.text_cursor.y - page > 1
 
 		a.move_cursor_start()
 
-		if a.first_line > page && cursor_in_range {
-			a.first_line -= page
+		if a.v.fst > page && cursor_in_range {
+			a.v.fst -= page
 			a.text_cursor.y -= page
 		} else if cursor_in_range {
-			a.first_line = 0
-			a.text_cursor.y = a.viewport_cursor.y
+			a.v.fst = 0
+			a.text_cursor.y = a.v.pos.y
 		} else {
-			a.first_line = 0
+			a.v.fst = 0
 			a.text_cursor.y = 1
-			a.viewport_cursor.y = 1
+			a.v.pos.y = 1
 		}
 	}
 }
 
 fn (mut a Adjust) move_cursor_right() {
 	end_of_line := a.data[a.text_cursor.y - 1].len
-	end_of_window := a.window.window_width
+	end_of_window := a.v.win.window_width
 
-	if a.text_cursor.x < end_of_line && a.viewport_cursor.x < end_of_window {
+	if a.text_cursor.x < end_of_line && a.v.pos.x < end_of_window {
 		a.text_cursor.x++
-		a.viewport_cursor.x++
+		a.v.pos.x++
 	}
 }
 
 fn (mut a Adjust) move_cursor_start() {
 	if a.text_cursor.x != 0 {
 		a.text_cursor.x = 0
-		a.update_viewport_cursor()
+		a.v.align()
 	}
 }
 
@@ -117,10 +117,10 @@ fn (mut a Adjust) move_cursor_up() {
 	if a.text_cursor.y > 1 {
 		a.text_cursor.y--
 
-		if a.viewport_cursor.y > 1 {
-			a.viewport_cursor.y--
-		} else if a.first_line > 0 {
-			a.first_line--
+		if a.v.pos.y > 1 {
+			a.v.pos.y--
+		} else if a.v.fst > 0 {
+			a.v.fst--
 		}
 
 		if a.text_cursor.x > a.data[a.text_cursor.y - 1].len {

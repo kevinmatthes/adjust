@@ -19,14 +19,14 @@
 
 module main
 
-import term.ui as terminal
-import os
+import term.ui { Color }
+import os { file_ext }
 
 struct Language {
 mut:
-	bg  terminal.Color = konsole_green
-	fg  terminal.Color = white
-	tab int = 4
+	bg  Color = konsole_green
+	fg  Color = white
+	tab int   = 4
 }
 
 fn (mut l Language) calculate() {
@@ -44,7 +44,7 @@ fn (mut l Language) calculate() {
 }
 
 fn (mut l Language) deduce(f string) {
-	l.bg, l.fg = match os.file_ext(f) {
+	l.bg, l.fg = match file_ext(f) {
 		'.asy' {
 			linguist_asymptote, white
 		}

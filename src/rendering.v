@@ -19,32 +19,32 @@
 
 module main
 
-import math
+import math { log10 }
 
 fn render(mut adjust Adjust) {
-	adjust.window.clear()
+	adjust.v.win.clear()
 	adjust.render_lines()
 	adjust.render_status_bar()
 	adjust.render_command_bar()
 	adjust.render_cursor()
-	adjust.window.flush()
+	adjust.v.win.flush()
 }
 
 fn (mut a Adjust) render_command_bar() {
-	a.window.draw_text(0, a.window.window_height, a.command_buffer)
+	a.v.win.draw_text(0, a.v.win.window_height, a.command_buffer)
 }
 
 fn (mut a Adjust) render_cursor() {
-	a.window.set_cursor_position(a.viewport_cursor.x, a.viewport_cursor.y)
+	a.v.win.set_cursor_position(a.v.pos.x, a.v.pos.y)
 }
 
 fn (mut a Adjust) render_line(i int) bool {
 	return if i - 1 < a.data.len {
-		times := a.line_number_filling - int(math.log10(i + 1))
+		times := a.v.lnf - int(log10(i + 1))
 		number := '${' '.repeat(times)}${i}'
-		line := ' ${number} │ ${a.data[i - 1]}'.limit(a.window.window_width)
+		line := ' ${number} │ ${a.data[i - 1]}'.limit(a.v.win.window_width)
 
-		a.window.draw_text(0, i - a.first_line, line)
+		a.v.win.draw_text(0, i - a.v.fst, line)
 
 		true
 	} else {
@@ -53,8 +53,8 @@ fn (mut a Adjust) render_line(i int) bool {
 }
 
 fn (mut a Adjust) render_lines() {
-	for i in 1 .. a.window.window_height - 1 {
-		if !a.render_line(i + a.first_line) {
+	for i in 1 .. a.v.win.window_height - 1 {
+		if !a.render_line(i + a.v.fst) {
 			break
 		}
 	}
@@ -62,7 +62,7 @@ fn (mut a Adjust) render_lines() {
 
 fn (mut a Adjust) render_status_bar() {
 	mut x := 0
-	y := a.window.window_height - 1
+	y := a.v.win.window_height - 1
 
 	x = a.render_status_bar_mode_name(x, y)
 	x = a.render_status_bar_file_name(x, y)
@@ -74,27 +74,27 @@ fn (mut a Adjust) render_status_bar_file_name(x int, y int) int {
 	file := a.files_to_edit[a.current_file]
 	position := ' ${a.text_cursor.x} : ${a.text_cursor.y} @ ${file} '
 
-	a.window.set_bg_color(a.l.bg)
-	a.window.set_color(a.l.fg)
-	a.window.draw_text(x, y, position)
-	a.window.reset()
+	a.v.win.set_bg_color(a.l.bg)
+	a.v.win.set_color(a.l.fg)
+	a.v.win.draw_text(x, y, position)
+	a.v.win.reset()
 
 	return x + position.len
 }
 
 fn (mut a Adjust) render_status_bar_filling(x int, y int) {
-	a.window.set_bg_color(a.l.bg)
-	a.window.draw_line(x, y, a.window.window_width, y)
-	a.window.reset()
+	a.v.win.set_bg_color(a.l.bg)
+	a.v.win.draw_line(x, y, a.v.win.window_width, y)
+	a.v.win.reset()
 }
 
 fn (mut a Adjust) render_status_bar_mode_name(x int, y int) int {
 	mode := a.mode.str()
 
-	a.window.set_bg_color(white)
-	a.window.set_color(black)
-	a.window.draw_text(x, y, ' ${mode} ')
-	a.window.reset()
+	a.v.win.set_bg_color(white)
+	a.v.win.set_color(black)
+	a.v.win.draw_text(x, y, ' ${mode} ')
+	a.v.win.reset()
 
 	return x + mode.len + 3
 }

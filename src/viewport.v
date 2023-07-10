@@ -19,80 +19,31 @@
 
 module main
 
-import os { execute }
+import math { log10 }
+import term { Coord }
+import term.ui { Context }
 
-fn (mut a Adjust) close_file() {
-	file := a.files_to_edit[a.current_file]
-
-	a.save_file()
-
-	match a.l.bg {
-		linguist_nim {
-			execute('nimpretty ${file}')
-		}
-		linguist_rust {
-			execute('rustfmt ${file}')
-		}
-		linguist_v {
-			execute('v fmt -w ${file}')
-		}
-		else {}
-	}
+struct Viewport {
+mut:
+	fst int
+	lnf int
+	pos Coord
+	win &Context = unsafe { nil }
 }
 
-fn (mut a Adjust) go_to_next_file() {
-	if a.files_to_edit.len > 1 {
-		a.close_file()
-
-		if a.current_file == a.files_to_edit.len - 1 {
-			a.current_file = 0
-		} else {
-			a.current_file++
-		}
-
-		a.load_file()
-	}
+fn (mut v Viewport) align() {
+	v.pos.x = v.lnf + 6
 }
 
-fn (mut a Adjust) go_to_previous_file() {
-	if a.files_to_edit.len > 1 {
-		a.close_file()
-
-		if a.current_file == 0 {
-			a.current_file = a.files_to_edit.len - 1
-		} else {
-			a.current_file--
-		}
-
-		a.load_file()
-	}
+fn (mut v Viewport) refill(n int) {
+	v.lnf = int(log10(n))
 }
 
-fn (mut a Adjust) load_file() {
-	a.data.clear()
-	a.init_language()
-
-	if content := os.read_lines(a.files_to_edit[a.current_file]) {
-		a.data << content
-	}
-
-	if a.data.len == 0 {
-		a.data << ''
-	}
-
-	for i, line in a.data {
-		a.data[i] = line.normalize_tabs(a.l.tab)
-	}
-
-	a.v.reset(a.data.len + 1)
-	a.text_cursor.x = 0
-	a.text_cursor.y = 1
-}
-
-fn (a Adjust) save_file() {
-	file := a.files_to_edit[a.current_file]
-	content := a.data.join_lines() + '\n'
-	os.write_file(file, content) or { panic(err) }
+fn (mut v Viewport) reset(n int) {
+	v.fst = 0
+	v.refill(n)
+	v.align()
+	v.pos.y = 1
 }
 
 ////////////////////////////////////////////////////////////////////////////////
