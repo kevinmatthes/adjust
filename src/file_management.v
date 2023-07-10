@@ -71,7 +71,6 @@ fn (mut a Adjust) go_to_previous_file() {
 fn (mut a Adjust) load_file() {
 	a.data.clear()
 	a.init_language()
-	a.first_line = 0
 
 	if content := os.read_lines(a.files_to_edit[a.current_file]) {
 		a.data << content
@@ -85,11 +84,9 @@ fn (mut a Adjust) load_file() {
 		a.data[i] = line.normalize_tabs(a.l.tab)
 	}
 
-	a.update_line_number_filling()
+	a.v.reset(a.data.len + 1)
 	a.text_cursor.x = 0
 	a.text_cursor.y = 1
-	a.update_viewport_cursor()
-	a.viewport_cursor.y = 1
 }
 
 fn (a Adjust) save_file() {
