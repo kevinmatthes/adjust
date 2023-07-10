@@ -45,6 +45,19 @@ fn (mut l Language) calculate() {
 
 fn (mut l Language) deduce(f string) {
 	l.bg, l.fg = match os.file_ext(f) {
+		'.asy' {
+			linguist_asymptote, white
+		}
+		'.bib' {
+			linguist_bibtex, black
+		}
+		'.c', '.h', '.i' {
+			linguist_c, white
+		}
+		'.C', '.CPP', '.H', '.HPP', '.c++', '.cc', '.cp', '.cpp', '.cxx', '.h++', '.hh', '.hp',
+		'.hpp', '.hxx', '.ii', '.tcc' {
+			linguist_c_plus_plus, black
+		}
 		'.cff', '.yaml', '.yml' {
 			linguist_yaml, white
 		}

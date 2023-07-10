@@ -1,0 +1,9 @@
+(
+  references: {},
+  changes: {
+    "Added": [
+      "colours for Asymptote, BibTeX, C, and C++",
+      "``--nightly`` flag for self-update",
+    ],
+  },
+)
