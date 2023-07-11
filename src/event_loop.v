@@ -24,26 +24,21 @@ import term.ui { Event }
 fn event_loop(event &Event, mut adjust Adjust) {
 	if event.typ == .key_down {
 		if !event_loop_always(event, mut adjust) {
-			match adjust.mode {
+			match adjust.s.m {
 				.command {
 					match event.code {
 						.backspace {
-							mut runes := adjust.command_buffer.runes()
-
-							if runes.len > 1 {
-								runes.delete_last()
-								adjust.command_buffer = runes.string()
-							}
+							adjust.s.backspace()
 						}
 						.enter {
 							adjust.execute_command()
 						}
 						.escape {
-							adjust.mode = .view
-							adjust.command_buffer = ''
+							adjust.s.view()
+							adjust.s.reset()
 						}
 						else {
-							adjust.command_buffer += event.utf8
+							adjust.s.add(event.utf8)
 						}
 					}
 				}
@@ -68,7 +63,7 @@ fn event_loop(event &Event, mut adjust Adjust) {
 							adjust.v.align()
 						}
 						.escape {
-							adjust.mode = .view
+							adjust.s.insert()
 						}
 						.home {
 							adjust.move_cursor_start()
@@ -99,8 +94,8 @@ fn event_loop(event &Event, mut adjust Adjust) {
 				.view {
 					match event.code {
 						.colon {
-							adjust.mode = .command
-							adjust.command_buffer += ':'
+							adjust.s.command()
+							adjust.s.reset()
 						}
 						.down {
 							adjust.move_cursor_down()
@@ -115,7 +110,7 @@ fn event_loop(event &Event, mut adjust Adjust) {
 							adjust.move_cursor_start()
 						}
 						.i {
-							adjust.mode = .insert
+							adjust.s.insert()
 						}
 						.left {
 							adjust.move_cursor_left()
