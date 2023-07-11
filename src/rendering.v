@@ -31,7 +31,7 @@ fn render(mut adjust Adjust) {
 }
 
 fn (mut a Adjust) render_command_bar() {
-	a.v.win.draw_text(0, a.v.win.window_height, a.command_buffer)
+	a.v.win.draw_text(0, a.v.win.window_height, &a.s.cb)
 }
 
 fn (mut a Adjust) render_cursor() {
@@ -89,7 +89,7 @@ fn (mut a Adjust) render_status_bar_filling(x int, y int) {
 }
 
 fn (mut a Adjust) render_status_bar_mode_name(x int, y int) int {
-	mode := a.mode.str()
+	mode := a.s.m.str()
 
 	a.v.win.set_bg_color(white)
 	a.v.win.set_color(black)
