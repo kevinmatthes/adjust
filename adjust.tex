@@ -74,18 +74,22 @@
 
 \section{Installing and Updating the Editor}
 \label{sec:installing-and-updating}
-It is recommended to install \adjust\ from source using the V CLI with the
-following command.
+It is recommended to install \adjust\ from source by executing the following
+commands.  First of all, the source code will be downloaded from GitHub and
+saved in the default directory of the current user account.  Then, it will be
+compiled to a binary executable.  Finally, it is considered the most convenient
+solution to create a soft-link to the compiled binary.
 
-\begin{lstlisting}[caption = Installing \adjust\ from source, language = bash]
+\begin{lstlisting}[caption = Installing \adjust\ from source]
 v install --git https://github.com/kevinmatthes/adjust
+v ~/.vmodules/adjust
+ln -s ~/.vmodules/adjust/adjust ~/.local/bin/adjust
 \end{lstlisting}
 
-Once installed, \adjust\ can be updated using either the above command or
-its built-in self-update mechanism which is technically just a wrapper around
-the above instruction to the V CLI.
+Once installed, \adjust\ can be updated using its built-in self-updating
+mechanism.
 
-\begin{lstlisting}[caption = Updating \adjust, language = bash]
+\begin{lstlisting}[caption = Updating \adjust]
 adjust --nightly
 \end{lstlisting}
 
@@ -98,7 +102,7 @@ As soon as the editor is installed, users can begin to edit their files with
 edit during the session.  Files which do not exist, yet, are going to be created
 on save.
 
-\begin{lstlisting}[caption = Starting \adjust, language = bash]
+\begin{lstlisting}[caption = Starting \adjust]
 adjust a.v b.c c.nim d.tex e.asy
 \end{lstlisting}
 
