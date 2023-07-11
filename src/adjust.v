@@ -33,6 +33,23 @@ mut:
 	v              Viewport
 }
 
+fn (mut a Adjust) delete_current_line() {
+	line := a.text_cursor.y - 1
+	a.data.delete(line)
+
+	if a.text_cursor.y > a.data.len {
+		a.text_cursor.y = a.data.len
+
+		if a.v.pos.y == 1 {
+			a.v.fst--
+		} else {
+			a.v.pos.y--
+		}
+	} else if a.text_cursor.x > a.data[line].len {
+		a.move_cursor_end()
+	}
+}
+
 fn (mut a Adjust) execute_command() {
 	match a.command_buffer {
 		':cancel', ':view' {
@@ -44,15 +61,13 @@ fn (mut a Adjust) execute_command() {
 			a.command_buffer = ''
 		}
 		':exit', ':leave', ':quit' {
-			a.close_file()
-			exit(0)
+			a.quit()
 		}
 		':exit unchanged', ':leave unchanged', ':quit unchanged' {
-			exit(0)
+			a.quit_unchanged()
 		}
 		':format', ':reformat' {
-			a.close_file()
-			a.load_file()
+			a.reformat_file()
 			a.command_buffer = ':'
 		}
 		':save', ':write' {
@@ -85,6 +100,20 @@ fn (mut a Adjust) insert_text(s string) {
 			a.move_cursor_end()
 		}
 	}
+}
+
+fn (mut a Adjust) quit() {
+	a.close_file()
+	exit(0)
+}
+
+fn (a &Adjust) quit_unchanged() {
+	exit(0)
+}
+
+fn (mut a Adjust) reformat_file() {
+	a.close_file()
+	a.load_file()
 }
 
 fn (mut a Adjust) remove_text(r RemoveKey) {
