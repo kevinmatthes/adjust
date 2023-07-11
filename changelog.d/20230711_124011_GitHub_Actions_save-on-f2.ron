@@ -1,0 +1,9 @@
+(
+  references: {},
+  changes: {
+    "Added": [
+      "delete current line with F8",
+      "mcedit-like keybindings (F2, F8, F10)",
+    ],
+  },
+)
