@@ -20,14 +20,12 @@
 module main
 
 import term.ui { Color }
-import v.vmod { from_file }
 
 const (
-	cli_desc = v_mod.description
-	cli_name = v_mod.name
-	cli_vrsn = v_mod.version
+	cli_desc = 'Yet another text editor for the terminal, written in V.'
+	cli_name = 'adjust'
+	cli_vrsn = '0.0.0'
 	install  = 'v install --git https://github.com/kevinmatthes/adjust'
-	v_mod    = from_file('v.mod') or { panic(err) }
 )
 
 const (
