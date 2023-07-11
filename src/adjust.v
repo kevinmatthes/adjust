@@ -23,42 +23,45 @@ import term { Coord }
 
 struct Adjust {
 mut:
-	command_buffer string
-	current_file   int
-	data           []string
-	files_to_edit  []string
-	l              Language
-	mode           Mode = .view
-	text_cursor    Coord
-	v              Viewport
+	current_file  int
+	data          []string
+	files_to_edit []string
+	l             Language
+	s             Status
+	text_cursor   Coord
+	v             Viewport
 }
 
 fn (mut a Adjust) delete_current_line() {
-	line := a.text_cursor.y - 1
-	a.data.delete(line)
+	if a.data.len > 1 {
+		line := a.text_cursor.y - 1
+		a.data.delete(line)
 
-	if a.text_cursor.y > a.data.len {
-		a.text_cursor.y = a.data.len
+		if a.text_cursor.y > a.data.len {
+			a.text_cursor.y = a.data.len
 
-		if a.v.pos.y == 1 {
-			a.v.fst--
-		} else {
-			a.v.pos.y--
+			if a.v.pos.y == 1 {
+				a.v.fst--
+			} else {
+				a.v.pos.y--
+			}
+		} else if a.text_cursor.x > a.data[line].len {
+			a.move_cursor_end()
 		}
-	} else if a.text_cursor.x > a.data[line].len {
-		a.move_cursor_end()
+	} else if a.data.len == 1 {
+		a.data[0] = ''
 	}
 }
 
 fn (mut a Adjust) execute_command() {
-	match a.command_buffer {
+	match a.s.cb {
 		':cancel', ':view' {
-			a.mode = .view
-			a.command_buffer = ''
+			a.s.view()
+			a.s.reset()
 		}
 		':edit', ':insert' {
-			a.mode = .insert
-			a.command_buffer = ''
+			a.s.insert()
+			a.s.reset()
 		}
 		':exit', ':leave', ':quit' {
 			a.quit()
@@ -68,14 +71,14 @@ fn (mut a Adjust) execute_command() {
 		}
 		':format', ':reformat' {
 			a.reformat_file()
-			a.command_buffer = ':'
+			a.s.reset()
 		}
 		':save', ':write' {
 			a.save_file()
-			a.command_buffer = ':'
+			a.s.reset()
 		}
 		else {
-			a.command_buffer = ':'
+			a.s.reset()
 		}
 	}
 }
