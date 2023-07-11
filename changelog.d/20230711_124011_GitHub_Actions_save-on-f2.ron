@@ -2,7 +2,7 @@
   references: {},
   changes: {
     "Added": [
-      "delete current line with F8",
+      "reformat current file with F5",
       "mcedit-like keybindings (F2, F8, F10)",
     ],
   },
