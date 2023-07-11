@@ -1,0 +1,9 @@
+(
+  references: {},
+  changes: {
+    "Added": [
+      "reformat current file with F5",
+      "mcedit-like keybindings (F2, F8, F10)",
+    ],
+  },
+)
