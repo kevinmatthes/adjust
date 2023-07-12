@@ -64,6 +64,9 @@ fn (mut l Language) deduce(f string) {
 		'.cff', '.yaml', '.yml' {
 			linguist_yaml, white
 		}
+		'.cfg', '.ini' {
+			linguist_configuration, black
+		}
 		'.json5' {
 			linguist_json5, white
 		}
