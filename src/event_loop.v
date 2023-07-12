@@ -63,7 +63,7 @@ fn event_loop(event &Event, mut adjust Adjust) {
 							adjust.v.align()
 						}
 						.escape {
-							adjust.s.insert()
+							adjust.s.view()
 						}
 						.home {
 							adjust.move_cursor_start()
