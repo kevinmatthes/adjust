@@ -61,69 +61,57 @@
     numberstyle     = \tiny
 }
 
+\Crefname{lstlisting}{Listing}{Listings}
+\crefname{lstlisting}{listing}{listings}
+
 \DeclareRobustCommand{\adjust}{\textsf{adjust}}
 
 \author{Kevin Matthes}
 \date{\today}
 \subtitle{Yet Another Text Editor for the Terminal, Written in V}
-\title{The adjust Text Editor}
+\title{The \texttt{adjust} Text Editor}
 
 \begin{document}
 \maketitle
 \tableofcontents
 
-\section{Installing and Updating the Editor}
-\label{sec:installing-and-updating}
-It is recommended to install \adjust\ from source by executing the following
-commands.  First of all, the source code will be downloaded from GitHub and
-saved in the default directory of the current user account.  Then, it will be
-compiled to a binary executable.  Finally, it is considered the most convenient
-solution to create a soft-link to the compiled binary.
+\section{Installation}
+\label{sec:installation}
+At the moment, the only way to install \adjust\ is from source.  In order to
+create a local copy of the public GitHub repository, it is recommended to
+execute the command shown in \Vref{lst:download} to clone the entire repository
+to \texttt{~/.vmodules/adjust/}.
 
-\begin{lstlisting}[caption = Installing \adjust\ from source]
+\begin{lstlisting}[caption = Downloading \adjust, label = lst:download]
 v install --git https://github.com/kevinmatthes/adjust
-v ~/.vmodules/adjust
+\end{lstlisting}
+
+The second step is the compilation of the executable.  Users should compile the
+software using the instruction given in \Vref{lst:compilation} in order to
+achieve an enhanced performance (flag \texttt{-prod}).  The flag \texttt{-W}
+will make sure that the source code does not contain any errors.
+
+\begin{lstlisting}[caption = Compiling \adjust, label = lst:compilation]
+v -W -prod ~/.vmodules/adjust/
+\end{lstlisting}
+
+For convenience, the resulting binary may be linked to \texttt{\$PATH}, at
+option.  Unix users might therefore consider the command stated in \Vref
+{lst:softlink} useful.
+
+\begin{lstlisting}[caption = Softlinking \adjust, label = lst:softlink]
 ln -s ~/.vmodules/adjust/adjust ~/.local/bin/adjust
 \end{lstlisting}
 
-Once installed, \adjust\ can be updated using its built-in self-updating
-mechanism.
+\section{Self-Updating}
+\label{sec:self-updating}
+\adjust\ has a built-in self-updating mechanism which is defined as a wrapper
+around \Vref{lst:download} and \Vref{lst:compilation}.  This command can be
+called as illustrated by \Vref{lst:update}.
 
-\begin{lstlisting}[caption = Updating \adjust]
+\begin{lstlisting}[caption = Updating \adjust, label = lst:update]
 adjust --nightly
 \end{lstlisting}
-
-\section{Working with the Editor}
-\label{sec:working}
-\subsection{Starting the Editor}
-\label{sec:working:starting}
-As soon as the editor is installed, users can begin to edit their files with
-\adjust.  To do so, the editor must be called with the paths to the files to
-edit during the session.  Files which do not exist, yet, are going to be created
-on save.
-
-\begin{lstlisting}[caption = Starting \adjust]
-adjust a.v b.c c.nim d.tex e.asy
-\end{lstlisting}
-
-\subsection{Leaving the Editor}
-\label{sec:working:leaving}
-To leave the current session, users will need to change to the command mode and
-execute one of the following commands.
-
-\begin{itemize}
-\item \texttt{:exit}
-\item \texttt{:exit unchanged}
-\item \texttt{:leave}
-\item \texttt{:leave unchanged}
-\item \texttt{:quit}
-\item \texttt{:quit unchanged}
-\end{itemize}
-
-All commands are synonymous regarding their final effect:  quitting the current
-editing session.  The commands ending in \texttt{unchanged} will cause \adjust \
-to discard all changes while those \emph{not} ending in \texttt{unchanged} will
-automatically save all changes before leaving.
 \end{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
