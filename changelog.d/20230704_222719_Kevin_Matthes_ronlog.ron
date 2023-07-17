@@ -2,7 +2,7 @@
   references: {},
   changes: {
     "Added": [
-      "CI:  ``v fmt -verify src/``, ``v .``",
+      "CI:  ``v fmt -verify src/``, ``v -W .``",
       "CODEOWNERS",
       "CI:  comment-changes workflow",
       "CHANGELOG.ron",
