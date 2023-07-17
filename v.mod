@@ -4,4 +4,5 @@ Module {
         version: '0.0.0'
         license: 'GPL-3.0'
         dependencies: []
+        repo_url: 'https://github.com/kevinmatthes/adjust'
 }
