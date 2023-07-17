@@ -71,16 +71,22 @@
 \subtitle{Yet Another Text Editor for the Terminal, Written in V}
 \title{The \texttt{adjust} Text Editor}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \begin{document}
 \maketitle
 \tableofcontents
 
-\section{Installation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Installation and Updating}
+\label{sec:installation-and-updating}
+\subsection{Installation}
 \label{sec:installation}
 At the moment, the only way to install \adjust\ is from source.  In order to
 create a local copy of the public GitHub repository, it is recommended to
 execute the command shown in \Vref{lst:download} to clone the entire repository
-to \texttt{~/.vmodules/adjust/}.
+to \texttt{\textasciitilde/.vmodules/adjust/}.
 
 \begin{lstlisting}[caption = Downloading \adjust, label = lst:download]
 v install --git https://github.com/kevinmatthes/adjust
@@ -103,15 +109,18 @@ option.  Unix users might therefore consider the command stated in \Vref
 ln -s ~/.vmodules/adjust/adjust ~/.local/bin/adjust
 \end{lstlisting}
 
-\section{Self-Updating}
+\subsection{Self-Updating}
 \label{sec:self-updating}
 \adjust\ has a built-in self-updating mechanism which is defined as a wrapper
-around \Vref{lst:download} and \Vref{lst:compilation}.  This command can be
-called as illustrated by \Vref{lst:update}.
+around \Vref{lst:download} and \Vref{lst:compilation}.  It is invoked as
+illustrated by \Vref{lst:update}.
 
 \begin{lstlisting}[caption = Updating \adjust, label = lst:update]
 adjust --nightly
 \end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \end{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
