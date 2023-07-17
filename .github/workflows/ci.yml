@@ -99,7 +99,7 @@ jobs:
     strategy:
       matrix:
         v:
-          - .
+          - -W .
           - fmt -verify src/
           - vet -W src/
 
