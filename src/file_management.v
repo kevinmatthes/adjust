@@ -33,6 +33,9 @@ fn (mut a Adjust) close_file() {
 		linguist_rust {
 			execute('rustfmt ${file}')
 		}
+		linguist_tex {
+			execute('latexmk')
+		}
 		linguist_v {
 			execute('v fmt -w ${file}')
 		}
