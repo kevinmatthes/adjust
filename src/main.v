@@ -20,7 +20,7 @@
 module main
 
 import flag { new_flag_parser }
-import os
+import os { execute }
 import term.ui { init }
 
 fn main() {
@@ -34,8 +34,8 @@ fn main() {
 	nightly := cli.bool('nightly', 0, false, install)
 
 	if nightly {
-		os.execute(install)
-		os.execute('v ~/.vmodules/adjust/')
+		execute(install)
+		execute(compile)
 	} else {
 		files := cli.finalize()!
 
