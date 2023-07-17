@@ -25,6 +25,7 @@ const (
 	cli_desc = 'Yet another text editor for the terminal, written in V.'
 	cli_name = 'adjust'
 	cli_vrsn = '0.0.0'
+	compile  = 'v -W -prod ~/.vmodules/adjust/'
 	install  = 'v install --git https://github.com/kevinmatthes/adjust'
 )
 
