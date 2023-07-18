@@ -31,7 +31,7 @@ fn main() {
 	cli.version(cli_vrsn)
 	cli.skip_executable()
 
-	nightly := cli.bool('nightly', 0, false, install)
+	nightly := cli.bool('nightly', 0, false, 'self-update and exit')
 
 	if nightly {
 		execute(install)
