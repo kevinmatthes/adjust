@@ -188,6 +188,35 @@ The supported commands are:
 \item \texttt{:quit unchanged}
 \end{itemize}
 
+At the moment, this is the sole possibility to leave \adjust\ without persisting
+changes to a file.
+
+\subsubsection{Reformatting the Current File}
+\label{sec:reformatting-the-current-file}
+For many programming languages, formatting tools are available in order to meet
+the configured format conventions.  As it is assumed that editing code of a
+particular language requires the formatters being installed, \adjust\ will
+\emph{always} reformat source files of the supported languages when they are
+isaved.  To trigger the reformatting manually, the following commands are
+available.
+
+\begin{itemize}
+\item \texttt{:format}
+\item \texttt{:reformat}
+\end{itemize}
+
+\subsubsection{Saving the Current File}
+\label{sec:saving-the-current-file}
+It is recommended to save the changes made to a file as often as possible in
+order to prevent loss of progress.  \adjust\ supports its users in doing so by
+automatically saving whenever possible and sensible.  Furthermore, the current
+file can be saved by the following commands manually.
+
+\begin{itemize}
+\item \texttt{:save}
+\item \texttt{:write}
+\end{itemize}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \end{document}
