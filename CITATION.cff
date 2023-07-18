@@ -42,5 +42,18 @@ repository-code: https://github.com/kevinmatthes/adjust
 title: adjust
 url: https://github.com/kevinmatthes/adjust
 version: 0.0.0
+references:
+  - type: software
+    abstract: A sample CLI tool made in V that prints geometric shapes to the screen.
+    authors:
+      - alias: hungrybluedev
+        family-names: Haldar
+        given-names: Subhomoy
+    date-released: 2023-04-20
+    license: MIT
+    repository-code: https://github.com/hungrybluedev/geo
+    title: geo
+    url: https://github.com/hungrybluedev/geo
+    version: 0.2.4
 
 ################################################################################
