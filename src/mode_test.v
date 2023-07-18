@@ -19,29 +19,16 @@
 
 module main
 
-enum Mode {
-	command
-	insert
-	view
+fn test_str_command() {
+	assert Mode.command.str() == 'C'
 }
 
-fn (m Mode) str() string {
-	return match m {
-		.command {
-			'C'
-		}
-		.insert {
-			'I'
-		}
-		.view {
-			'V'
-		}
-	}
+fn test_str_insert() {
+	assert Mode.insert.str() == 'I'
 }
 
-enum RemoveKey {
-	backspace
-	delete
+fn test_str_view() {
+	assert Mode.view.str() == 'V'
 }
 
 ////////////////////////////////////////////////////////////////////////////////

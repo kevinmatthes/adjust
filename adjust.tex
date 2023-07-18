@@ -121,6 +121,104 @@ adjust --nightly
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\section{Editor Modes}
+\label{sec:editor-modes}
+\subsection{Command Mode}
+\label{sec:command-mode}
+The \texttt{command} mode of \adjust\ is designed to instruct the editor in a
+terminal-like manner.
+
+If the current editor mode is \texttt{view}, the \texttt{command} mode can be
+entered by typing \texttt{:}.  Any succeeding text input will be added to the
+command buffer whilst the backspace key will remove the last character from it.
+The current content of the command buffer is shown in the second line of the
+status bar.  When pressing the enter key, the specified command will be executed
+which usually involves resetting the command buffer.  Unknown commands will not
+have any effect.
+
+The supported commands are explained in the following by their category.
+
+\subsubsection{Changing to \texttt{insert} Mode}
+\label{sec:changing-to-insert-mode}
+To enter the \texttt{insert} mode from the \texttt{command} mode, users might
+consider the following commands useful in addition to entering the target mode
+by changing to \texttt{view} mode intermediately.
+
+\begin{itemize}
+\item \texttt{:edit}
+\item \texttt{:insert}
+\end{itemize}
+
+\subsubsection{Changing to \texttt{view} Mode}
+\label{sec:changing-to-view-mode}
+In order to leave the \texttt{command} mode and to go back to the \texttt{view}
+mode, not only pressing the escape key will have the intended effect but also
+the following commands.
+
+\begin{itemize}
+\item \texttt{:cancel}
+\item \texttt{:view}
+\end{itemize}
+
+\subsubsection{Leaving the Editor}
+\label{sec:leaving-the-editor}
+These commands can be used to leave the current session.  Exiting a session will
+not only terminate the process but also save and reformat the current file, if
+available.
+
+The supported commands are as follows.
+
+\begin{itemize}
+\item \texttt{:exit}
+\item \texttt{:leave}
+\item \texttt{:quit}
+\end{itemize}
+
+\subsubsection{Leaving the Editor without Saving}
+\label{sec:leaving-the-editor-without-saving}
+Sometimes, the changes made to a file shall not be kept.  Therefore, these
+commands might come in handy.  Neither will the changes be saved nor the file be
+reformatted, if available at all.
+
+The supported commands are:
+
+\begin{itemize}
+\item \texttt{:exit unchanged}
+\item \texttt{:leave unchanged}
+\item \texttt{:quit unchanged}
+\end{itemize}
+
+At the moment, this is the sole possibility to leave \adjust\ without persisting
+changes to a file.
+
+\subsubsection{Reformatting the Current File}
+\label{sec:reformatting-the-current-file}
+For many programming languages, formatting tools are available in order to meet
+the configured format conventions.  As it is assumed that editing code of a
+particular language requires their toolchains being installed, \adjust\ will
+\emph{always} reformat source files of the supported languages when they are
+saved.  To trigger the reformatting manually, the following commands are
+available.
+
+\begin{itemize}
+\item \texttt{:format}
+\item \texttt{:reformat}
+\end{itemize}
+
+\subsubsection{Saving the Current File}
+\label{sec:saving-the-current-file}
+It is recommended to save the changes made to a file as often as possible in
+order to prevent loss of progress.  \adjust\ supports its users in doing so by
+automatically saving whenever possible and sensible.  Furthermore, the current
+file can be saved by the following commands manually.
+
+\begin{itemize}
+\item \texttt{:save}
+\item \texttt{:write}
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \end{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
