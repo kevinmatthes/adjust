@@ -100,7 +100,7 @@ jobs:
       matrix:
         v:
           - -W .
-          - -stats test .
+          - -stats test src/
           - fmt -verify src/
           - vet -W src/
 
