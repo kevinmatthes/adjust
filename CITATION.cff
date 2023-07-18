@@ -42,5 +42,46 @@ repository-code: https://github.com/kevinmatthes/adjust
 title: adjust
 url: https://github.com/kevinmatthes/adjust
 version: 0.0.0
+references:
+  - type: software
+    date-released: 2021-12-21
+    version: 0.3.0
+    abstract: A command line based editor inspired by Vim. Written in Nim.
+    authors:
+      - alias: fox0430
+      - alias: walkre-niboshi
+      - alias: juancarlospaco
+      - alias: tobgle
+      - alias: uninhm
+      - alias: kevinmatthes
+      - alias: jiro4989
+      - alias: jrfondren
+      - alias: loloicci
+      - alias: lbartoletti
+      - alias: 5enxia
+      - alias: 0branch
+      - alias: bung87
+      - alias: xigoi
+      - alias: avahe-kellenberger
+      - alias: tjbell
+      - alias: tobimensch
+      - alias: JohnAD
+      - alias: SolitudeSF
+    license: GPL-3.0
+    repository-code: https://github.com/fox0430/moe
+    title: moe
+    url: https://editor.moe
+  - type: software
+    abstract: A sample CLI tool made in V that prints geometric shapes to the screen.
+    authors:
+      - alias: hungrybluedev
+        family-names: Haldar
+        given-names: Subhomoy
+    date-released: 2023-04-20
+    license: MIT
+    repository-code: https://github.com/hungrybluedev/geo
+    title: geo
+    url: https://github.com/hungrybluedev/geo
+    version: 0.2.4
 
 ################################################################################
