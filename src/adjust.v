@@ -84,8 +84,7 @@ fn (mut a Adjust) execute_command() {
 }
 
 fn (mut a Adjust) init_language() {
-	a.l.deduce(a.files_to_edit[a.current_file])
-	a.l.calculate()
+	a.l.init(a.files_to_edit[a.current_file])
 }
 
 fn (mut a Adjust) insert_text(s string) {
