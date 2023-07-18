@@ -121,6 +121,53 @@ adjust --nightly
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\section{Editor Modes}
+\label{sec:editor-modes}
+\subsection{Command Mode}
+\label{sec:command-mode}
+The \texttt{command} mode of \adjust\ is designed to instruct the editor in a
+terminal-like manner.
+
+If the current editor mode is \texttt{view}, the \texttt{command} mode can be
+entered by typing \texttt{:}.  Any succeeding text input will be added to the
+command buffer whilst the backspace key will remove the last character from it.
+The current content of the command buffer is shown in the second line of the
+status bar.  When pressing the enter key, the specified command will be executed
+which usually involves resetting the command buffer.  Unknown commands will not
+have any effect.
+
+The supported commands are explained in the following by their category.
+
+\subsubsection{Leaving the Editor}
+\label{sec:leaving-the-editor}
+These commands can be used to leave the current session.  Exiting a session will
+not only terminate the process but also save and reformat the current file, if
+available.
+
+The supported commands are as follows.
+
+\begin{itemize}
+\item \texttt{:exit}
+\item \texttt{:leave}
+\item \texttt{:quit}
+\end{itemize}
+
+\subsubsection{Leaving the Editor without Saving}
+\label{sec:leaving-the-editor-without-saving}
+Sometimes, the changes made to a file shall not be kept.  Therefore, these
+commands might come in handy.  Neither will the changes be saved nor the file be
+reformatted, if available at all.
+
+The supported commands are:
+
+\begin{itemize}
+\item \texttt{:exit unchanged}
+\item \texttt{:leave unchanged}
+\item \texttt{:quit unchanged}
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \end{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
