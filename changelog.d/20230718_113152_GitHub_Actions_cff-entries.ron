@@ -1,0 +1,9 @@
+(
+  references: {},
+  changes: {
+    "Added": [
+      "CFF:  entry for ``moe`` v0.3.0",
+      "CFF:  entry for ``geo`` v0.2.4",
+    ],
+  },
+)
