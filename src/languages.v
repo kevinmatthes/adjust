@@ -20,7 +20,7 @@
 module main
 
 import term.ui { Color }
-import os { file_ext }
+import os { file_ext, file_name }
 
 struct Language {
 mut:
@@ -44,65 +44,65 @@ fn (mut l Language) calculate() {
 }
 
 fn (mut l Language) deduce(f string) {
-	l.bg, l.fg = match file_ext(f) {
-		'.C', '.CPP', '.H', '.HPP', '.c++', '.cc', '.cp', '.cpp', '.cxx', '.h++', '.hh', '.hp',
-		'.hpp', '.hxx', '.ii', '.tcc' {
-			linguist_c_plus_plus, black
+	l.bg, l.fg = match file_name(f) {
+		'.gitattributes', '.gitconfig', '.gitignore' {
+			linguist_git, white
 		}
-		'.asy' {
-			linguist_asymptote, white
+		'.justfile', 'justfile' {
+			linguist_just, white
 		}
-		'.bash', '.sh' {
-			linguist_shell, black
-		}
-		'.bib' {
-			linguist_bibtex, black
-		}
-		'.c', '.h', '.i' {
-			linguist_c, white
-		}
-		'.cff', '.yaml', '.yml' {
-			linguist_yaml, white
-		}
-		'.cfg', '.ini' {
-			linguist_configuration, black
-		}
-		'.json5' {
-			linguist_json5, white
-		}
-		'.markdown', '.md', '.mdown', '.mdwn', '.mkd', '.mkdn', '.mkdown' {
-			linguist_markdown, white
-		}
-		'.nim', '.nimble', '.nimrod', '.nims' {
-			linguist_nim, white
-		}
-		'.pl' {
+		'.latexmkrc', 'LatexMk', 'latexmkrc' {
 			linguist_perl, white
 		}
-		'.rs' {
-			linguist_rust, black
+		'nim.cfg' {
+			linguist_nim, white
 		}
-		'.tex' {
-			linguist_tex, white
-		}
-		'.v', '.vsh', '.vv' {
+		'v.mod' {
 			linguist_v, black
 		}
 		else {
-			match f {
-				'.gitattributes', '.gitconfig', '.gitignore' {
-					linguist_git, white
+			match file_ext(f) {
+				'.C', '.CPP', '.H', '.HPP', '.c++', '.cc', '.cp', '.cpp', '.cxx', '.h++', '.hh',
+				'.hp', '.hpp', '.hxx', '.ii', '.tcc' {
+					linguist_c_plus_plus, black
 				}
-				'.justfile', 'justfile' {
-					linguist_just, white
+				'.asy' {
+					linguist_asymptote, white
 				}
-				'.latexmkrc', 'LatexMk', 'latexmkrc' {
-					linguist_perl, white
+				'.bash', '.sh' {
+					linguist_shell, black
 				}
-				'nim.cfg' {
+				'.bib' {
+					linguist_bibtex, black
+				}
+				'.c', '.h', '.i' {
+					linguist_c, white
+				}
+				'.cff', '.yaml', '.yml' {
+					linguist_yaml, white
+				}
+				'.cfg', '.ini' {
+					linguist_configuration, black
+				}
+				'.json5' {
+					linguist_json5, white
+				}
+				'.markdown', '.md', '.mdown', '.mdwn', '.mkd', '.mkdn', '.mkdown' {
+					linguist_markdown, white
+				}
+				'.nim', '.nimble', '.nimrod', '.nims' {
 					linguist_nim, white
 				}
-				'v.mod' {
+				'.pl' {
+					linguist_perl, white
+				}
+				'.rs' {
+					linguist_rust, black
+				}
+				'.tex' {
+					linguist_tex, white
+				}
+				'.v', '.vsh', '.vv' {
 					linguist_v, black
 				}
 				else {
@@ -111,6 +111,11 @@ fn (mut l Language) deduce(f string) {
 			}
 		}
 	}
+}
+
+fn (mut l Language) init(f string) {
+	l.deduce(f)
+	l.calculate()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
