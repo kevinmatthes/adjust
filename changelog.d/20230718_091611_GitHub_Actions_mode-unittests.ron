@@ -1,0 +1,11 @@
+(
+  references: {},
+  changes: {
+    "Added": [
+      "src/status_test.v",
+      "CI:  ``v -stats test .``",
+      "src/mode_test.v",
+      "src/remove_key.v",
+    ],
+  },
+)
