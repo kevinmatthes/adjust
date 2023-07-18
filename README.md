@@ -31,6 +31,7 @@
 <!----------------------------------------------------------------------------->
 
 [ci]:  https://github.com/kevinmatthes/adjust/workflows/ci/badge.svg
+[geo]:  https://github.com/hungrybluedev/geo
 [gpl3]:  https://github.com/kevinmatthes/adjust/blob/main/LICENSE
 [last]:  https://img.shields.io/github/last-commit/kevinmatthes/adjust
 [license]:  https://img.shields.io/github/license/kevinmatthes/adjust
@@ -79,5 +80,7 @@ follows:
   colours which is used to render the "Languages" statistics for each GitHub
   repository, making it a well-known convention also applied to the design of
   `adjust`'s status bar.
+- [hungrybluedev/geo][geo] demonstrates both the `flag` module of the V standard
+  library as well as the creation of unittests in V.
 
 <!----------------------------------------------------------------------------->
