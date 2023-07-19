@@ -21,7 +21,7 @@ module main
 
 import term.ui { Color }
 
-fn make_test(bg Color, fg Color, tab int, f string) {
+fn mktst_lang(bg Color, fg Color, tab int, f string) {
 	mut l := Language{}
 
 	l.init(f)
@@ -31,89 +31,89 @@ fn make_test(bg Color, fg Color, tab int, f string) {
 	assert l.tab == tab
 }
 
-fn make_test_extensions(bg Color, fg Color, tab int, extensions []string) {
+fn mktst_lang_extensions(bg Color, fg Color, tab int, extensions []string) {
 	for e in extensions {
-		make_test(bg, fg, tab, './path/to/something.${e}')
+		mktst_lang(bg, fg, tab, './path/to/something.${e}')
 	}
 }
 
-fn make_test_names(bg Color, fg Color, tab int, names []string) {
+fn mktst_lang_names(bg Color, fg Color, tab int, names []string) {
 	for n in names {
-		make_test(bg, fg, tab, './path/to/${n}')
+		mktst_lang(bg, fg, tab, './path/to/${n}')
 	}
 }
 
 fn test_init_asy() {
-	make_test_extensions(linguist_asymptote, white, 4, ['asy'])
+	mktst_lang_extensions(linguist_asymptote, white, 4, ['asy'])
 }
 
 fn test_init_bib() {
-	make_test_extensions(linguist_bibtex, black, 4, ['bib'])
+	mktst_lang_extensions(linguist_bibtex, black, 4, ['bib'])
 }
 
 fn test_init_c() {
-	make_test_extensions(linguist_c, white, 4, ['c', 'h', 'i'])
+	mktst_lang_extensions(linguist_c, white, 4, ['c', 'h', 'i'])
 }
 
 fn test_init_cfg() {
-	make_test_extensions(linguist_configuration, black, 4, ['cfg', 'ini'])
+	mktst_lang_extensions(linguist_configuration, black, 4, ['cfg', 'ini'])
 }
 
 fn test_init_cpp() {
-	make_test_extensions(linguist_c_plus_plus, black, 4, ['C', 'CPP', 'H', 'HPP', 'c++', 'cc',
+	mktst_lang_extensions(linguist_c_plus_plus, black, 4, ['C', 'CPP', 'H', 'HPP', 'c++', 'cc',
 		'cp', 'cpp', 'cxx', 'h++', 'hh', 'hp', 'hpp', 'hxx', 'ii', 'tcc'])
 }
 
 fn test_init_default() {
-	make_test_extensions(konsole_green, white, 4, [''])
-	make_test_names(konsole_green, white, 4, [''])
+	mktst_lang_extensions(konsole_green, white, 4, [''])
+	mktst_lang_names(konsole_green, white, 4, [''])
 }
 
 fn test_init_git() {
-	make_test_names(linguist_git, white, 4, ['.gitattributes', '.gitconfig', '.gitignore'])
+	mktst_lang_names(linguist_git, white, 4, ['.gitattributes', '.gitconfig', '.gitignore'])
 }
 
 fn test_init_json5() {
-	make_test_extensions(linguist_json5, white, 4, ['json5'])
+	mktst_lang_extensions(linguist_json5, white, 4, ['json5'])
 }
 
 fn test_init_just() {
-	make_test_names(linguist_just, white, 4, ['.justfile', 'justfile'])
+	mktst_lang_names(linguist_just, white, 4, ['.justfile', 'justfile'])
 }
 
 fn test_init_md() {
-	make_test_extensions(linguist_markdown, white, 4, ['markdown', 'md', 'mdown', 'mdwn', 'mkd',
+	mktst_lang_extensions(linguist_markdown, white, 4, ['markdown', 'md', 'mdown', 'mdwn', 'mkd',
 		'mkdn', 'mkdown'])
 }
 
 fn test_init_nim() {
-	make_test_extensions(linguist_nim, white, 2, ['nim', 'nimble', 'nimrod', 'nims'])
-	make_test_names(linguist_nim, white, 2, ['nim.cfg'])
+	mktst_lang_extensions(linguist_nim, white, 2, ['nim', 'nimble', 'nimrod', 'nims'])
+	mktst_lang_names(linguist_nim, white, 2, ['nim.cfg'])
 }
 
 fn test_init_pl() {
-	make_test_extensions(linguist_perl, white, 4, ['pl'])
+	mktst_lang_extensions(linguist_perl, white, 4, ['pl'])
 }
 
 fn test_init_rs() {
-	make_test_extensions(linguist_rust, black, 4, ['rs'])
+	mktst_lang_extensions(linguist_rust, black, 4, ['rs'])
 }
 
 fn test_init_sh() {
-	make_test_extensions(linguist_shell, black, 4, ['bash', 'sh'])
+	mktst_lang_extensions(linguist_shell, black, 4, ['bash', 'sh'])
 }
 
 fn test_init_tex() {
-	make_test_extensions(linguist_tex, white, 4, ['tex'])
+	mktst_lang_extensions(linguist_tex, white, 4, ['tex'])
 }
 
 fn test_init_v() {
-	make_test_extensions(linguist_v, black, 8, ['v', 'vsh', 'vv'])
-	make_test_names(linguist_v, black, 8, ['v.mod'])
+	mktst_lang_extensions(linguist_v, black, 8, ['v', 'vsh', 'vv'])
+	mktst_lang_names(linguist_v, black, 8, ['v.mod'])
 }
 
 fn test_init_yml() {
-	make_test_extensions(linguist_yaml, white, 2, ['cff', 'yaml', 'yml'])
+	mktst_lang_extensions(linguist_yaml, white, 2, ['cff', 'yaml', 'yml'])
 }
 
 ////////////////////////////////////////////////////////////////////////////////
