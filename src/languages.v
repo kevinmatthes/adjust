@@ -20,7 +20,7 @@
 module main
 
 import term.ui { Color }
-import os { file_ext, file_name }
+import os { execute, file_ext, file_name }
 
 struct Language {
 mut:
@@ -116,6 +116,16 @@ fn (mut l Language) deduce(f string) {
 fn (mut l Language) init(f string) {
 	l.deduce(f)
 	l.calculate()
+}
+
+fn (l &Language) reformat(f string) {
+	match l.bg {
+		linguist_nim { execute('nimpretty ${f}') }
+		linguist_rust { execute('rustfmt ${f}') }
+		linguist_tex { execute('latexmk') }
+		linguist_v { execute('v fmt -w ${f}') }
+		else {}
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
