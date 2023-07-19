@@ -19,28 +19,11 @@
 
 module main
 
-import os { execute }
+import os { read_lines, write_file }
 
 fn (mut a Adjust) close_file() {
-	file := a.files_to_edit[a.current_file]
-
 	a.save_file()
-
-	match a.l.bg {
-		linguist_nim {
-			execute('nimpretty ${file}')
-		}
-		linguist_rust {
-			execute('rustfmt ${file}')
-		}
-		linguist_tex {
-			execute('latexmk')
-		}
-		linguist_v {
-			execute('v fmt -w ${file}')
-		}
-		else {}
-	}
+	a.l.reformat(a.files_to_edit[a.current_file])
 }
 
 fn (mut a Adjust) go_to_next_file() {
@@ -75,7 +58,7 @@ fn (mut a Adjust) load_file() {
 	a.data.clear()
 	a.init_language()
 
-	if content := os.read_lines(a.files_to_edit[a.current_file]) {
+	if content := read_lines(a.files_to_edit[a.current_file]) {
 		a.data << content
 	}
 
@@ -95,7 +78,7 @@ fn (mut a Adjust) load_file() {
 fn (a Adjust) save_file() {
 	file := a.files_to_edit[a.current_file]
 	content := a.data.join_lines() + '\n'
-	os.write_file(file, content) or { panic(err) }
+	write_file(file, content) or { panic(err) }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
