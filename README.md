@@ -39,6 +39,7 @@
 [license]:  https://img.shields.io/github/license/kevinmatthes/adjust
 [linguist]:  https://github.com/github-linguist/linguist
 [moe]:  https://github.com/fox0430/moe
+[renovate]:  https://img.shields.io/badge/renovate-enabled-brightgreen.svg
 [repository]:  https://github.com/kevinmatthes/adjust
 
 <!----------------------------------------------------------------------------->
@@ -50,6 +51,7 @@
 [![][ci]][repository]
 [![][last]][repository]
 [![][license]][repository]
+[![][renovate]][repository]
 
 Yet another text editor for the terminal, written in V.
 
