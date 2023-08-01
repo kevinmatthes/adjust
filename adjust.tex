@@ -79,6 +79,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\newpage
 \section{Installation and Updating}
 \label{sec:installation-and-updating}
 \subsection{Installation}
@@ -121,6 +122,7 @@ adjust --nightly
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\newpage
 \section{Editor Modes}
 \label{sec:editor-modes}
 \subsection{Command Mode}
@@ -216,6 +218,31 @@ file can be saved by the following commands manually.
 \item \texttt{:save}
 \item \texttt{:write}
 \end{itemize}
+
+Please see also:
+
+\begin{itemize}
+\item \Vref{sec:f2-save}
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\section{Key Bindings}
+\label{sec:key-bindings}
+\subsection{\texttt{F2}:  Save}
+\label{sec:f2-save}
+To save the recent changes, users just need to press \texttt{F2}.  The recent
+changes will then be written to the connected file path which will create a new
+file in case that it did not exist, yet.
+
+On save, the file contents are going to be reformatted, if possible.  However,
+the current view is \emph{not} going to be refreshed, i.e., the formatted file
+contents are only present in the connected file path but not in the editor.
+This was a design decision in order to prevent confusion if the formatted and
+unformatted states of the file would differ dramatically.
+
+This key binding works in \emph{every} editor mode.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
