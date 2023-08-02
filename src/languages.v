@@ -120,6 +120,7 @@ fn (mut l Language) init(f string) {
 
 fn (l &Language) reformat(f string) {
 	match l.bg {
+		linguist_c, linguist_c_plus_plus { execute('indent ${f}') }
 		linguist_nim { execute('nimpretty ${f}') }
 		linguist_rust { execute('rustfmt ${f}') }
 		linguist_tex { execute('latexmk') }
