@@ -52,6 +52,7 @@
 \usepackage[bookmarks, bookmarksnumbered, bookmarksopen, hidelinks]{hyperref}
 \usepackage[english]{cleveref}
 
+\usepackage{booktabs}
 \usepackage{listings}
 \lstset{
     backgroundcolor = \color{lightgray},
@@ -76,6 +77,7 @@
 \begin{document}
 \maketitle
 \tableofcontents
+\listoftables
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -207,6 +209,13 @@ available.
 \item \texttt{:reformat}
 \end{itemize}
 
+Please see also:
+
+\begin{itemize}
+\item \Vref{sec:f5-reformat}
+\item \Vref{tab:formatters}
+\end{itemize}
+
 \subsubsection{Saving the Current File}
 \label{sec:saving-the-current-file}
 It is recommended to save the changes made to a file as often as possible in
@@ -236,11 +245,41 @@ To save the recent changes, users just need to press \texttt{F2}.  The recent
 changes will then be written to the connected file path which will create a new
 file in case that it did not exist, yet.
 
-On save, the file contents are going to be reformatted, if possible.  However,
-the current view is \emph{not} going to be refreshed, i.e., the formatted file
-contents are only present in the connected file path but not in the editor.
-This was a design decision in order to prevent confusion if the formatted and
-unformatted states of the file would differ dramatically.
+This key binding works in \emph{every} editor mode.
+
+\subsection{\texttt{F5}:  Reformat}
+\label{sec:f5-reformat}
+To reformat the currently opened file, users just need to press \texttt{F5}.
+The recent changes will then be written to the connected file path, the selected
+formatter will be run over the connected file path, and the file contents will
+be reloaded.  Thereby, the view will be reset.
+
+At the moment, the formatters are hard-coded into the binary and are usually run
+as separate processes in the background.  \adjust\ will always wait for the
+formatters to return, so this might take some time for large files and / or
+projects.  The formatters will be run silently, i.e., failures and / or error
+messages, if any, are \emph{not} going to be reported back to the user.
+
+\Vref{tab:formatters} gives a complete list of the supported formatters, sorted
+by the respective computer language in the left-hand column.  The right-hand
+column shows the executed command where \texttt{$f$} denotes the currently opened
+file.
+
+\begin{table}
+\centering
+\caption{Supported formatters}
+\label{tab:formatters}
+\begin{tabular}{cl}
+\toprule
+Computer language   & Executed command          \\
+\midrule
+\LaTeX              & \texttt{latexmk}          \\
+Nim                 & \texttt{nimpretty $f$}    \\
+Rust                & \texttt{rustfmt $f$}      \\
+V                   & \texttt{v fmt -w $f$}     \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 This key binding works in \emph{every} editor mode.
 
