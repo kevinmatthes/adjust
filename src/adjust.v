@@ -45,7 +45,7 @@ fn (mut a Adjust) delete_current_line() {
 			} else {
 				a.v.pos.y--
 			}
-		} else if a.text_cursor.x > a.data[line].len {
+		} else if a.text_cursor.x > a.data[line].len_utf8() {
 			a.move_cursor_end()
 		}
 	} else if a.data.len == 1 {
@@ -146,10 +146,10 @@ fn (mut a Adjust) remove_text(r RemoveKey) {
 			}
 		}
 		.delete {
-			end_of_line := a.text_cursor.x == a.data[line].len
+			end_of_line := a.text_cursor.x == a.data[line].len_utf8()
 			not_last_line := a.text_cursor.y < a.data.len
 
-			if a.text_cursor.x < a.data[line].len {
+			if a.text_cursor.x < a.data[line].len_utf8() {
 				runes.delete(a.text_cursor.x)
 				a.data[line] = runes.string()
 			} else if end_of_line && not_last_line {

@@ -31,14 +31,14 @@ fn (mut a Adjust) move_cursor_down() {
 			a.v.pos.y++
 		}
 
-		if a.text_cursor.x > a.data[a.text_cursor.y - 1].len {
+		if a.text_cursor.x > a.data[a.text_cursor.y - 1].len_utf8() {
 			a.move_cursor_end()
 		}
 	}
 }
 
 fn (mut a Adjust) move_cursor_end() {
-	end_of_line := a.data[a.text_cursor.y - 1].len
+	end_of_line := a.data[a.text_cursor.y - 1].len_utf8()
 	end_of_window := a.v.win.window_width
 	offset := a.v.lnf + 6
 
@@ -97,7 +97,7 @@ fn (mut a Adjust) move_cursor_page_up() {
 }
 
 fn (mut a Adjust) move_cursor_right() {
-	end_of_line := a.data[a.text_cursor.y - 1].len
+	end_of_line := a.data[a.text_cursor.y - 1].len_utf8()
 	end_of_window := a.v.win.window_width
 
 	if a.text_cursor.x < end_of_line && a.v.pos.x < end_of_window {
@@ -123,7 +123,7 @@ fn (mut a Adjust) move_cursor_up() {
 			a.v.fst--
 		}
 
-		if a.text_cursor.x > a.data[a.text_cursor.y - 1].len {
+		if a.text_cursor.x > a.data[a.text_cursor.y - 1].len_utf8() {
 			a.move_cursor_end()
 		}
 	}
