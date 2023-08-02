@@ -59,6 +59,7 @@ bin/
 *.fdb_latexmk
 *.fls
 *.log
+*.lot
 *.out
 *.pdf
 *.toc
