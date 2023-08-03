@@ -19,15 +19,15 @@
 
 module main
 
-fn test_str_command() {
+fn test_mode_str_command() {
 	assert Mode.command.str() == 'C'
 }
 
-fn test_str_insert() {
+fn test_mode_str_insert() {
 	assert Mode.insert.str() == 'I'
 }
 
-fn test_str_view() {
+fn test_mode_str_view() {
 	assert Mode.view.str() == 'V'
 }
 
