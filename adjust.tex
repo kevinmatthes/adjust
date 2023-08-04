@@ -262,8 +262,8 @@ messages, if any, are \emph{not} going to be reported back to the user.
 
 \Vref{tab:formatters} gives a complete list of the supported formatters, sorted
 by the respective computer language in the left-hand column.  The right-hand
-column shows the executed command where \texttt{$f$} denotes the currently opened
-file.
+column shows the executed command where \texttt{$f$} denotes the currently
+opened file.
 
 \begin{table}
 \centering
@@ -282,6 +282,19 @@ V                   & \texttt{v fmt -w $f$}     \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+This key binding works in \emph{every} editor mode.
+
+\subsection{\texttt{F8}:  Delete Current Line}
+\label{sec:f8-delete-current-line}
+To delete the current line, users just need to press \texttt{F8}.  The currently
+selected text line will then be removed.
+
+If possible, the cursor will be moved to the same column in the subsequent line;
+else, the same column in the previous line will be targeted.  In case that the
+same column could not be selected as the targeted line is shorter than the
+removed one, the end of the targeted line will be selected as the new column
+position.
 
 This key binding works in \emph{every} editor mode.
 

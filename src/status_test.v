@@ -19,7 +19,7 @@
 
 module main
 
-fn test_add_characters() {
+fn test_status_add_characters() {
 	mut s := Status{}
 
 	s.add('t')
@@ -43,7 +43,7 @@ fn test_add_characters() {
 	assert s.m == .view
 }
 
-fn test_add_string() {
+fn test_status_add_string() {
 	mut s := Status{}
 
 	s.add('test')
@@ -52,7 +52,7 @@ fn test_add_string() {
 	assert s.m == .view
 }
 
-fn test_backspace_empty() {
+fn test_status_backspace_empty() {
 	mut s := Status{}
 
 	s.backspace()
@@ -61,7 +61,7 @@ fn test_backspace_empty() {
 	assert s.m == .view
 }
 
-fn test_backspace_one_character() {
+fn test_status_backspace_one_character() {
 	mut s := Status{}
 
 	s.add(':')
@@ -71,7 +71,7 @@ fn test_backspace_one_character() {
 	assert s.m == .view
 }
 
-fn test_backspace_text() {
+fn test_status_backspace_text() {
 	mut s := Status{}
 
 	s.add(':test')
@@ -81,7 +81,7 @@ fn test_backspace_text() {
 	assert s.m == .view
 }
 
-fn test_command() {
+fn test_status_command() {
 	mut s := Status{}
 
 	s.command()
@@ -90,14 +90,14 @@ fn test_command() {
 	assert s.m == .command
 }
 
-fn test_default_configuration() {
+fn test_status_default_configuration() {
 	s := Status{}
 
 	assert s.cb == ''
 	assert s.m == .view
 }
 
-fn test_insert() {
+fn test_status_insert() {
 	mut s := Status{}
 
 	s.insert()
@@ -106,7 +106,7 @@ fn test_insert() {
 	assert s.m == .insert
 }
 
-fn test_reset_command_mode_empty() {
+fn test_status_reset_command_mode_empty() {
 	mut s := Status{}
 
 	s.command()
@@ -116,7 +116,7 @@ fn test_reset_command_mode_empty() {
 	assert s.m == .command
 }
 
-fn test_reset_command_mode_with_text() {
+fn test_status_reset_command_mode_with_text() {
 	mut s := Status{}
 
 	s.command()
@@ -127,7 +127,7 @@ fn test_reset_command_mode_with_text() {
 	assert s.m == .command
 }
 
-fn test_reset_default() {
+fn test_status_reset_default() {
 	mut s := Status{}
 
 	s.reset()
@@ -136,7 +136,7 @@ fn test_reset_default() {
 	assert s.m == .view
 }
 
-fn test_reset_not_command_mode_with_text() {
+fn test_status_reset_not_command_mode_with_text() {
 	mut s := Status{}
 
 	s.add(':test')
@@ -146,7 +146,7 @@ fn test_reset_not_command_mode_with_text() {
 	assert s.m == .view
 }
 
-fn test_view() {
+fn test_status_view() {
 	mut s := Status{}
 
 	s.command()

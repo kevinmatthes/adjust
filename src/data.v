@@ -19,16 +19,50 @@
 
 module main
 
-fn test_mode_str_command() {
-	assert Mode.command.str() == 'C'
+import term { Coord }
+
+struct Data {
+mut:
+	cur int
+	fte []string
+	pos Coord = Coord{0, 1}
+	txt []string
 }
 
-fn test_mode_str_insert() {
-	assert Mode.insert.str() == 'I'
+fn (d &Data) file() ?&string {
+	return if d.cur < d.fte.len { &d.fte[d.cur] } else { none }
 }
 
-fn test_mode_str_view() {
-	assert Mode.view.str() == 'V'
+fn (d Data) has_reached_bottom() ?bool {
+	return d.line_idx()? == d.line_cnt() - 1
+}
+
+fn (d Data) has_reached_top() ?bool {
+	return d.line_idx()? == 0
+}
+
+fn (d &Data) line() ?&string {
+	i := d.line_idx()
+
+	return if i == none || i? >= d.txt.len {
+		none
+	} else {
+		&d.txt[i?]
+	}
+}
+
+fn (d &Data) line_cnt() int {
+	return d.txt.len
+}
+
+fn (d &Data) line_len() ?int {
+	return d.line()?.len_utf8()
+}
+
+fn (d &Data) line_idx() ?int {
+	r := d.pos.y - 1
+
+	return if r < 0 { none } else { r }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
