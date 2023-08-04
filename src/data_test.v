@@ -42,6 +42,65 @@ fn test_data_file_some() {
 	}.file()? == ''
 }
 
+fn test_data_has_reached_bottom_empty() {
+	assert !Data{}.has_reached_bottom()?
+}
+
+fn test_data_has_reached_bottom_invalid_position() {
+	h := Data{
+		pos: Coord{0, 0}
+	}.has_reached_bottom()
+
+	assert h == none
+}
+
+fn test_data_has_reached_bottom_not_empty() {
+	assert Data{
+		txt: ['']
+	}.has_reached_bottom()?
+}
+
+fn test_data_has_reached_top_empty() {
+	assert Data{}.has_reached_top()?
+}
+
+fn test_data_has_reached_top_invalid_position() {
+	h := Data{
+		pos: Coord{0, 0}
+	}.has_reached_top()
+
+	assert h == none
+}
+
+fn test_data_has_reached_top_not_empty_1_line() {
+	assert Data{
+		txt: ['']
+	}.has_reached_top()?
+}
+
+fn test_data_has_reached_top_not_empty_2_lines_false() {
+	assert !Data{
+		pos: Coord{0, 2}
+		txt: ['', '']
+	}.has_reached_top()?
+}
+
+fn test_data_has_reached_top_not_empty_2_lines_true() {
+	assert Data{
+		txt: ['', '']
+	}.has_reached_top()?
+}
+
+fn test_data_line_cnt_empty() {
+	assert Data{}.line_cnt() == 0
+}
+
+fn test_data_line_cnt_not_empty() {
+	assert Data{
+		txt: ['']
+	}.line_cnt() == 1
+}
+
 fn test_data_line_idx_default() {
 	assert Data{}.line_idx()? == 0
 }
