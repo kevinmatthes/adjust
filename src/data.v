@@ -26,7 +26,7 @@ mut:
 	cur int
 	fte []string
 	pos Coord = Coord{0, 1}
-	txt []string
+	txt []TextLine
 }
 
 fn (d &Data) file() ?&string {
@@ -41,7 +41,7 @@ fn (d Data) has_reached_top() ?bool {
 	return d.line_idx()? == 0
 }
 
-fn (d &Data) line() ?&string {
+fn (d &Data) line() ?&TextLine {
 	i := d.line_idx()
 
 	return if i == none || i? >= d.txt.len {
@@ -56,7 +56,7 @@ fn (d &Data) line_cnt() int {
 }
 
 fn (d &Data) line_len() ?int {
-	return d.line()?.len_utf8()
+	return d.line()?.len()
 }
 
 fn (d &Data) line_idx() ?int {
