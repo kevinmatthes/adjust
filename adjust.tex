@@ -178,6 +178,12 @@ The supported commands are as follows.
 \item \texttt{:quit}
 \end{itemize}
 
+Please see also:
+
+\begin{itemize}
+\item \Vref{sec:f10-leaving-the-editor}
+\end{itemize}
+
 \subsubsection{Leaving the Editor without Saving}
 \label{sec:leaving-the-editor-without-saving}
 Sometimes, the changes made to a file shall not be kept.  Therefore, these
@@ -212,7 +218,7 @@ available.
 Please see also:
 
 \begin{itemize}
-\item \Vref{sec:f5-reformat}
+\item \Vref{sec:f5-reformatting}
 \item \Vref{tab:formatters}
 \end{itemize}
 
@@ -231,7 +237,7 @@ file can be saved by the following commands manually.
 Please see also:
 
 \begin{itemize}
-\item \Vref{sec:f2-save}
+\item \Vref{sec:f2-saving}
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -239,16 +245,16 @@ Please see also:
 \newpage
 \section{Key Bindings}
 \label{sec:key-bindings}
-\subsection{\texttt{F2}:  Save}
-\label{sec:f2-save}
+\subsection{\texttt{F2}:  Saving}
+\label{sec:f2-saving}
 To save the recent changes, users just need to press \texttt{F2}.  The recent
 changes will then be written to the connected file path which will create a new
 file in case that it did not exist, yet.
 
 This key binding works in \emph{every} editor mode.
 
-\subsection{\texttt{F5}:  Reformat}
-\label{sec:f5-reformat}
+\subsection{\texttt{F5}:  Reformatting}
+\label{sec:f5-reformatting}
 To reformat the currently opened file, users just need to press \texttt{F5}.
 The recent changes will then be written to the connected file path, the selected
 formatter will be run over the connected file path, and the file contents will
@@ -285,8 +291,8 @@ V                   & \texttt{v fmt -w $f$}     \\
 
 This key binding works in \emph{every} editor mode.
 
-\subsection{\texttt{F8}:  Delete Current Line}
-\label{sec:f8-delete-current-line}
+\subsection{\texttt{F8}:  Deleting the Current Line}
+\label{sec:f8-deleting-the-current-line}
 To delete the current line, users just need to press \texttt{F8}.  The currently
 selected text line will then be removed.
 
@@ -295,6 +301,14 @@ else, the same column in the previous line will be targeted.  In case that the
 same column could not be selected as the targeted line is shorter than the
 removed one, the end of the targeted line will be selected as the new column
 position.
+
+This key binding works in \emph{every} editor mode.
+
+\subsection{\texttt{F10}:  Leaving the Editor}
+\label{sec:f10-leaving-the-editor}
+In order to save the recent changes and quit the current editor session, users
+just need to press \texttt{F10}.  As soon as the file has been saved, it will be
+reformatted, if possible.
 
 This key binding works in \emph{every} editor mode.
 
