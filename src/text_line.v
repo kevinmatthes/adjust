@@ -19,50 +19,54 @@
 
 module main
 
-import term { Coord }
-
-struct Data {
+struct TextLine {
 mut:
-	cur int
-	fte []string
-	pos Coord = Coord{0, 1}
-	txt []TextLine
+	t string
 }
 
-fn (d &Data) file() ?&string {
-	return if d.cur < d.fte.len { &d.fte[d.cur] } else { none }
+fn (mut t TextLine) add(tl &TextLine) {
+	t.t += tl.t
 }
 
-fn (d Data) has_reached_bottom() ?bool {
-	return d.line_idx()? == d.line_cnt() - 1
-}
+fn (mut t TextLine) del(i int) bool {
+	mut r := t.t.runes()
 
-fn (d Data) has_reached_top() ?bool {
-	return d.line_idx()? == 0
-}
-
-fn (d &Data) line() ?&TextLine {
-	i := d.line_idx()
-
-	return if i == none || i? >= d.txt.len {
-		none
+	return if i < 0 || i >= r.len {
+		false
 	} else {
-		&d.txt[i?]
+		r.delete(i)
+		t.t = r.string()
+		true
 	}
 }
 
-fn (d &Data) line_cnt() int {
-	return d.txt.len
+fn (mut t TextLine) ins(i int, s string) bool {
+	mut r := t.t.runes()
+
+	return if i < 0 || i > r.len {
+		false
+	} else {
+		r.insert(i, s.runes())
+		t.t = r.string()
+		true
+	}
 }
 
-fn (d &Data) line_len() ?int {
-	return d.line()?.len()
+fn (t &TextLine) len() int {
+	return t.t.len_utf8()
 }
 
-fn (d &Data) line_idx() ?int {
-	r := d.pos.y - 1
+fn (mut t TextLine) sep(i int) ?TextLine {
+	mut r := t.t.runes()
 
-	return if r < 0 { none } else { r }
+	return if i < 0 || i > r.len {
+		none
+	} else if i == r.len {
+		TextLine{}
+	} else {
+		t.t = t.t.limit(i)
+		TextLine{r[i..].string()}
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////

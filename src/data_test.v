@@ -56,7 +56,7 @@ fn test_data_has_reached_bottom_invalid_position() {
 
 fn test_data_has_reached_bottom_not_empty() {
 	assert Data{
-		txt: ['']
+		txt: [TextLine{}]
 	}.has_reached_bottom()?
 }
 
@@ -74,20 +74,20 @@ fn test_data_has_reached_top_invalid_position() {
 
 fn test_data_has_reached_top_not_empty_1_line() {
 	assert Data{
-		txt: ['']
+		txt: [TextLine{}]
 	}.has_reached_top()?
 }
 
 fn test_data_has_reached_top_not_empty_2_lines_false() {
 	assert !Data{
 		pos: Coord{0, 2}
-		txt: ['', '']
+		txt: [TextLine{}, TextLine{}]
 	}.has_reached_top()?
 }
 
 fn test_data_has_reached_top_not_empty_2_lines_true() {
 	assert Data{
-		txt: ['', '']
+		txt: [TextLine{}, TextLine{}]
 	}.has_reached_top()?
 }
 
@@ -97,7 +97,7 @@ fn test_data_line_cnt_empty() {
 
 fn test_data_line_cnt_not_empty() {
 	assert Data{
-		txt: ['']
+		txt: [TextLine{}]
 	}.line_cnt() == 1
 }
 
@@ -130,19 +130,19 @@ fn test_data_line_len_none_invalid_position() {
 
 fn test_data_line_len_some_ascii() {
 	assert Data{
-		txt: ['?']
+		txt: [TextLine{'?'}]
 	}.line_len()? == 1
 }
 
 fn test_data_line_len_some_empty() {
 	assert Data{
-		txt: ['']
+		txt: [TextLine{}]
 	}.line_len()? == 0
 }
 
 fn test_data_line_len_some_non_ascii() {
 	assert Data{
-		txt: ['§']
+		txt: [TextLine{'§'}]
 	}.line_len()? == 1
 }
 
@@ -155,7 +155,7 @@ fn test_data_line_none_default() {
 fn test_data_line_none_invalid_position() {
 	l := Data{
 		pos: Coord{0, 0}
-		txt: ['']
+		txt: [TextLine{}]
 	}.line()
 
 	assert l == none
@@ -163,8 +163,8 @@ fn test_data_line_none_invalid_position() {
 
 fn test_data_line_some() {
 	assert Data{
-		txt: ['']
-	}.line()? == ''
+		txt: [TextLine{}]
+	}.line()? == TextLine{}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
