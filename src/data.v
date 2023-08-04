@@ -33,6 +33,14 @@ fn (d &Data) file() ?&string {
 	return if d.cur < d.fte.len { &d.fte[d.cur] } else { none }
 }
 
+fn (d Data) has_reached_bottom() ?bool {
+	return d.line_idx()? == d.line_cnt() - 1
+}
+
+fn (d Data) has_reached_top() ?bool {
+	return d.line_idx()? == 0
+}
+
 fn (d &Data) line() ?&string {
 	i := d.line_idx()
 
@@ -41,6 +49,10 @@ fn (d &Data) line() ?&string {
 	} else {
 		&d.txt[i?]
 	}
+}
+
+fn (d &Data) line_cnt() int {
+	return d.txt.len
 }
 
 fn (d &Data) line_len() ?int {
