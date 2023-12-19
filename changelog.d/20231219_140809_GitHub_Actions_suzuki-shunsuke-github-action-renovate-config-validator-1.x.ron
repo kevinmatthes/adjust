@@ -1,0 +1,9 @@
+(
+  references: {},
+  changes: {
+    "Fixed": [
+      "adjust formatting",
+      "migrate to more modern Renovate configuration syntax",
+    ],
+  },
+)
