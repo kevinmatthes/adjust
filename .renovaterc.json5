@@ -23,7 +23,7 @@
         },
         {
             matchManagers: [
-                "regex",
+                "custom.regex",
             ],
             matchPackageNames: [
                 "actionlint",
@@ -36,8 +36,9 @@
             ],
         },
     ],
-    regexManagers: [
+    customManagers: [
         {
+            customType: "regex",
             datasourceTemplate: "github-releases",
             depNameTemplate: "cffconvert",
             fileMatch: [
@@ -49,6 +50,7 @@
             packageNameTemplate: "citation-file-format/cffconvert",
         },
         {
+            customType: "regex",
             datasourceTemplate: "github-releases",
             depNameTemplate: "actionlint",
             fileMatch: [
