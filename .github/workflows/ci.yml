@@ -82,7 +82,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: suzuki-shunsuke/github-action-renovate-config-validator@v2.2.0
+      - uses: suzuki-shunsuke/github-action-renovate-config-validator@v2.3.0
 
   v:
     runs-on: ubuntu-latest
